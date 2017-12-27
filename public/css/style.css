@@ -1,0 +1,24 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto+Mono");
+body {
+  padding: 30px;
+  font: 18px 'Roboto Mono', monospace, sans-serif;
+  color: blue; }
+
+h1 {
+  margin: 0;
+  margin-bottom: 1em;
+  font-size: 1em;
+  text-transform: uppercase; }
+
+a {
+  color: blue;
+  text-decoration: none; }
+  a:hover {
+    color: #000; }
+
+ul {
+  padding: 0;
+  margin: 0;
+  column-count: 3; }
+  ul li {
+    list-style: none; }

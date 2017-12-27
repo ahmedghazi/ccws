@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  h1= title
+  //p Welcome to #{title}
+  ul
+      each post in posts
+        li
+            a(href="#{post.link}" target="_blank") #{post.name}
