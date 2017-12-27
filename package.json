@@ -23,6 +23,7 @@
     "mongoose": "^4.1.2",
     "morgan": "^1.6.1",
     "node-schedule": "^1.2.5",
+    "open-graph-scraper": "^3.1.4",
     "request": "^2.81.0",
     "serve-favicon": "^2.3.0"
   },

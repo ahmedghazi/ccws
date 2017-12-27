@@ -5,6 +5,7 @@ var express = require('express'),
   request = require('request'),
   schedule = require('node-schedule'),
   async = require('async'),
+  ogs = require('open-graph-scraper'),
   FB = require('fb'),
   fbApp,
   client_id,
@@ -110,6 +111,45 @@ function record(res, _res){
     }
   );
 }
+
+router.get('/image', function (req, res, next) {
+  Post
+    .find()
+    .sort({updated_time: 'desc'})
+    //.limit(100)
+    .exec(function(err, posts) {
+      async.each(posts,
+        function(post, callback){
+          ogs({url: post.link}, function (error, results) {
+            //console.log('error:', error); // This is returns true or false. True if there was a error. The error it self is inside the results object.
+            if(!error){
+              //console.log('results:', results.data.ogImage.url);
+              var image = '';
+              if(results.data.ogImage)
+                image = results.data.ogImage.url;
+              else if(results.data.twitterImage){
+                image = results.data.twitterImage.url;
+                //console.log('results:', results.data);
+              }
+
+              var query = {_id: post._id}
+              var update = {image: image}
+              console.log(image);
+              Post.findOneAndUpdate(query, update, {upsert: true, 'new': true}, function (err, post, raw) {
+                callback();
+              });
+              
+            }else{
+              callback();
+            }
+            
+          });
+        },
+        function(err){
+          res.send("done")
+        });
+    });
+});
 
 router.get('/drop', function (req, res, next) {
   req.resetDb();
