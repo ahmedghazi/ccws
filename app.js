@@ -17,6 +17,13 @@ models.forEach(function (model) {
 });
 var app = express();
 
+app.use(function(req, res, next){
+	req.resetDb = function(){
+	  mongoose.connection.db.dropDatabase();
+	}
+	return next();
+})
+
 module.exports = require('./config/express')(app, config);
 
 app.listen(config.port, function () {

@@ -9,12 +9,12 @@ var PostSchema = new Schema({
   	message: String,
   	description: String,
   	link: {
-      	//unique: true,
-      	index: true,
-      	type: String
+    	unique: true,
+    	index: true,
+    	type: String
   	},
   	updated_time: {
-      	index: true,
+      index: true,
     	type: Date, default: Date.now
   	},
   	from: String,

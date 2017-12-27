@@ -42,29 +42,11 @@ router.get('/oauth', function (req, res, next) {
 
 router.get('/posts', function (req, res, next) {
   FB.setAccessToken('398286323958628|IrwxIREQmoqa0x8G2zTIj7AmzP8');
-  FB.api('393558204075688/feed?limit=10&&fields=id,message,name,caption,description,updated_time,link,from,type', function (_res) {
+  FB.api('393558204075688/feed?limit=100&&fields=id,message,name,caption,description,updated_time,link,from,type', function (_res) {
     if(!_res || _res.error) {
      console.log(!_res ? 'error occurred' : _res.error);
      return res.send(_res.error);
     }
-    //console.log(_res.id);
-    //console.log(_res.name);
-    
-    record(res, _res);
-  });
-});
-
-router.get('/feed', function (req, res, next) {
-  var url = req.query.url+'&fields='+req.query.fields;
-  return res.send(req.query)
-  FB.setAccessToken('398286323958628|IrwxIREQmoqa0x8G2zTIj7AmzP8');
-  FB.api(url, function (_res) {
-    if(!_res || _res.error) {
-     console.log(!_res ? 'error occurred' : _res.error);
-     return res.send(_res.error);
-    }
-    //console.log(_res.id);
-    //console.log(_res.name);
     
     record(res, _res);
   });
@@ -79,22 +61,29 @@ function record(res, _res){
 
   async.each(_res.data,
     function(_post, callback){
-      var post = new Post();
-          post.fbid = _post.id;
-          post.type = _post.type;
-          post.name = _post.name;
-          post.message = _post.message;
-          post.description = _post.description;
-          post.updated_time = _post.updated_time;
-          post.link = _post.link;
-          post.from = _post.from.name;
-      //console.log(post)
       
-      post.save(function (err) {
-        if (err) console.log(err);
+      //console.log(post)
+      if(_post.link){
+        var query = {link: _post.link}
+        var update = {
+            fbid: _post.id,
+            type: _post.type,
+            name: _post.name,
+            message: _post.message,
+            description: _post.description,
+            updated_time: _post.updated_time,
+            link: _post.link,
+            from: _post.from.name
+        }
 
+        Post.findOneAndUpdate(query, update, {upsert: true, 'new': true}, function (err, post, raw) {
+          callback();
+        });
+
+      }else{
         callback();
-      });
+      }
+      
     },
     function(err){
       
@@ -120,5 +109,9 @@ function record(res, _res){
       }
     }
   );
-
 }
+
+router.get('/drop', function (req, res, next) {
+  req.resetDb();
+  res.redirect("/");
+});
