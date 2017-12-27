@@ -19,6 +19,15 @@ a {
 ul {
   padding: 0;
   margin: 0;
-  column-count: 3; }
+  column-count: 2; }
   ul li {
     list-style: none; }
+    ul li span {
+      display: inline-block;
+      vertical-align: top; }
+      ul li span.date:after {
+        content: "-";
+        margin: 0 .5em;
+        display: inline-block; }
+      ul li span.name {
+        max-width: 70%; }

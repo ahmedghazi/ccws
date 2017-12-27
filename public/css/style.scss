@@ -21,8 +21,21 @@ a {
 ul{
 	padding: 0;
 	margin: 0;
-	column-count: 3;
+	column-count: 2;
 	li{
 		list-style: none;
+		span{
+			display: inline-block;
+			vertical-align: top;
+			&.date:after{
+				content: "-";
+				margin: 0 .5em;
+				display: inline-block;
+			}
+			&.name{
+				max-width: 70%;
+				
+			}
+		}
 	}
 }
