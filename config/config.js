@@ -8,7 +8,7 @@ var config = {
     app: {
       name: 'sniff'
     },
-    port: process.env.PORT || 3000,
+    port: process.env.PORT || 3005,
     db: 'mongodb://localhost/sniff-development'
   },
 
@@ -17,7 +17,7 @@ var config = {
     app: {
       name: 'sniff'
     },
-    port: process.env.PORT || 3000,
+    port: process.env.PORT || 3005,
     db: 'mongodb://localhost/sniff-test'
   },
 
@@ -26,7 +26,7 @@ var config = {
     app: {
       name: 'sniff'
     },
-    port: process.env.PORT || 3000,
+    port: process.env.PORT || 3005,
     db: 'mongodb://localhost/sniff-production'
   }
 };
