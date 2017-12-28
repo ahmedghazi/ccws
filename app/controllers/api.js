@@ -45,7 +45,7 @@ router.get('/oauth', function (req, res, next) {
 
 router.get('/posts', function (req, res, next) {
   //helpers.
-  FB.setAccessToken('398286323958628|IrwxIREQmoqa0x8G2zTIj7AmzP8');
+  /*FB.setAccessToken('398286323958628|IrwxIREQmoqa0x8G2zTIj7AmzP8');
   FB.api('393558204075688/feed?limit=100&&fields=id,message,name,caption,description,updated_time,link,from,type', function (_res) {
     if(!_res || _res.error) {
      console.log(!_res ? 'error occurred' : _res.error);
@@ -53,6 +53,18 @@ router.get('/posts', function (req, res, next) {
     }
     
     record(res, _res);
+  });*/
+  helpers.init_timestamp();
+  
+  var d = new Date();
+  //d.setHours ( d.getHours() - 3 );
+  d.setHours(0,0,0,0);
+  var max = Math.round(d/1000);
+
+//    helpers.init_fb();
+  
+  helpers.collect(max, function(){
+      console.log("collect callback")
   });
 });
 
