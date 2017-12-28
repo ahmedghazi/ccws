@@ -11,26 +11,32 @@ exports.test = function(next){
 };
 
 exports.cronStop = function(next){
-    var stop = schedule.cancelJob("honor-cron-1")
+    var stop = schedule.cancelJob("ccws-cron")
     return next(false, stop);
 };
 
 exports.cronStart = function(app, next){
     var rule = new schedule.RecurrenceRule();
     //rule.dayOfWeek = [1, 2, 3, 4, 5];
-    //rule.dayOfWeek = "*";
+    rule.dayOfWeek = "*";
     //rule.hour = "*";
-    rule.minute = "10";
+    //rule.minute = "33";
     //rule.minute = "17";
-    //rule.second = "20";
+    //rule.second = "50";
+console.log('cronStart', new Date());
 
-    schedule.scheduleJob("honor-cron-1", rule, function(){
+    schedule.scheduleJob("ccws-cron", rule, function(){
         console.log('--------honor-cron', new Date());
 
+        helpers.init_timestamp();
+        
         var d = new Date();
-        d.setHours ( d.getHours() - 3 );
+        //d.setHours ( d.getHours() - 3 );
+        d.setHours(0,0,0,0);
         var max = Math.round(d/1000);
 
+    //    helpers.init_fb();
+        
         helpers.collect(max, function(){
             console.log("collect callback")
         });

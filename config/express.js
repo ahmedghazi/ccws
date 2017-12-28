@@ -7,6 +7,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var compress = require('compression');
 var methodOverride = require('method-override');
+var cron            = require('../app/lib/cron');
 
 module.exports = function(app, config) {
   var env = process.env.NODE_ENV || 'development';
@@ -60,5 +61,14 @@ module.exports = function(app, config) {
       });
   });
 
+  cron.cronStop(function(err, result){
+    if (err) return console.log(err);
+console.log("cronStop")
+    cron.cronStart(app, function(_err, _result){
+      if (_err) return console.log(_err);
+      
+      console.log("cron result: ",_result)
+    });
+  });
   return app;
 };

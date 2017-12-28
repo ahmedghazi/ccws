@@ -44,7 +44,7 @@ router.get('/oauth', function (req, res, next) {
 
 
 router.get('/posts', function (req, res, next) {
-
+  //helpers.
   FB.setAccessToken('398286323958628|IrwxIREQmoqa0x8G2zTIj7AmzP8');
   FB.api('393558204075688/feed?limit=100&&fields=id,message,name,caption,description,updated_time,link,from,type', function (_res) {
     if(!_res || _res.error) {
@@ -81,38 +81,37 @@ function record(res, _res){
         }
 
         Post.findOneAndUpdate(query, update, {upsert: true, 'new': true}, function (err, post, raw) {
-          callback(post);
+          //callback();
+          extract({ uri: post.link }, function (error, results) {
+            if(!error){              
+              var image = '';
+              if(results.ogImage)
+                image = results.ogImage;
+              else if(results.twitterImage){
+                image = results.twitterImage;
+              }
+
+              var query = {_id: post._id}
+              var update = {image: image}
+              console.log(image);
+           
+              Post.findOneAndUpdate(query, update, {upsert: true, 'new': true}, function (err, post, raw) {
+                callback();
+              });
+            
+            }else{
+              callback();
+            }
+            
+          });
         });
 
       }else{
-        callback(post);
+        callback();
       }
       
     },
-    function(post){
-      extract({ uri: post.link }, function (error, results) {
-        if(!error){              
-          var image = '';
-          if(results.ogImage)
-            image = results.ogImage;
-          else if(results.twitterImage){
-            image = results.twitterImage;
-          }
-
-          var query = {_id: post._id}
-          var update = {image: image}
-          console.log(image);
-       
-          Post.findOneAndUpdate(query, update, {upsert: true, 'new': true}, function (err, post, raw) {
-            callback();
-          });
-        
-        }else{
-          callback();
-        }
-        
-      });
-    },
+    
     function(err){
       
       if (_res.paging && _res.paging.next != "undefined"){
