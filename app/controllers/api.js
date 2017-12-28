@@ -78,15 +78,15 @@ router.get('/shot', function (req, res, next) {
                 _slug = slug(post.name).toLowerCase();
             else 
                 _slug = Math.random().toString(36).substring(7);
-            console.log(post.name)
+            
             console.log(_slug)
 
-            var screenshot = "public/uploads/ccws-"+_slug+".png";
+            var screenshot = "public/uploads/crazy-cool-websites-"+_slug+".png";
             //var screenshot = "public/uploads/ccws-"+slug(post.name)+".png";
             //console.log(screenshot)
             webshot(post.link, screenshot, function(err) {
               if(!err){
-
+                screenshot = screenshot.replace("public/", "");
                 var query = {_id: post._id}
                 var update = {image: screenshot}
                 console.log(screenshot);
