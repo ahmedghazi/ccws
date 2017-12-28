@@ -1,5 +1,7 @@
 .liste-sort{
 	margin-bottom: 1em;
+	font-size: $font2;
+	
 }
 .liste{
 	margin-bottom: 1em;
@@ -25,8 +27,12 @@
 			img{
 				position: absolute; top: 9px;
 				//right: 0;
-				height: 100px; width: auto;}
+				height: auto;
+				max-height: 400px; width: auto;}
 		}
+
+		.date,
+		.from{font-size: $font2;}
 	}
 	
 }

@@ -1,7 +1,14 @@
+body {
+  padding: $font3;
+  font: $font3 'Roboto Mono', monospace, sans-serif;
+  color: blue;
+  
+}
+
 h1{
 	margin: 0;
 	margin-bottom: 1em;
-	font-size: 1em;
+	font-size: $font3;
 	text-transform: uppercase;
 	font-weight: 400;
 }

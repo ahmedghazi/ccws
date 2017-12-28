@@ -404,10 +404,15 @@ img[data-sizes="auto"] {
 
 /* =TYPE
 ------------------ */
+body {
+  padding: 24px;
+  font: 24px "Roboto Mono", monospace, sans-serif;
+  color: blue; }
+
 h1 {
   margin: 0;
   margin-bottom: 1em;
-  font-size: 1em;
+  font-size: 24px;
   text-transform: uppercase;
   font-weight: 400; }
 
@@ -2496,14 +2501,13 @@ a {
   .last-lg {
     order: 1; } }
 body {
-  padding: 30px;
-  font: 30px 'Roboto Mono', monospace, sans-serif;
-  color: blue; }
+  padding: 24px; }
   body.loading ul {
     opacity: 0.5; }
 
 .liste-sort {
-  margin-bottom: 1em; }
+  margin-bottom: 1em;
+  font-size: 18px; }
 
 .liste {
   margin-bottom: 1em; }
@@ -2525,5 +2529,9 @@ body {
       .liste .item:hover img {
         position: absolute;
         top: 9px;
-        height: 100px;
+        height: auto;
+        max-height: 400px;
         width: auto; }
+    .liste .item .date,
+    .liste .item .from {
+      font-size: 18px; }

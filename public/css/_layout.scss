@@ -1,7 +1,5 @@
 body {
-  padding: 30px;
-  font: 30px 'Roboto Mono', monospace, sans-serif;
-  color: blue;
+  padding: $font3;
   &.loading{
   	ul{opacity: 0.5}
   }

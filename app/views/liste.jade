@@ -2,10 +2,10 @@
     .row
         .col-xs-2
             div.sort-date Date
-        .col-xs-4
-            div.sort-from Posted by
         .col-xs-6
             div.sort-name Name
+        .col-xs-4
+            div.sort-from.text-right Posted by
 .liste
     each post in posts
         .item
@@ -16,11 +16,12 @@
                         //a(href="#{post.link}" target="_blank")
                         .col-xs-2
                             div.date #{moment(post.updated_time).format('MM.DD.YY')}
-                        .col-xs-4
-                            div.from #{post.from}
+                        
                         .col-xs-6
                                 span #{post.name}
                                 if image
                                     span.img
                                         img(src="#{image}" width="" height="22" onerror="this.className='img404'")
-                    
+                        
+                        .col-xs-4
+                            div.from.text-right #{post.from}
