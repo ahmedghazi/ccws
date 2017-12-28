@@ -1,0 +1,32 @@
+.liste-sort{
+	margin-bottom: 1em;
+}
+.liste{
+	margin-bottom: 1em;
+	.item{
+		margin-bottom: .1em;
+		.col-xs-7{position: relative;}
+		.img{
+			display: inline;
+			vertical-align: bottom;
+			img{
+				margin-left: .5em;
+				vertical-align: baseline;
+				&.img404{
+					display: none;
+				}
+			}
+		}
+
+		
+		&:hover{
+			z-index: 9999;
+			cursor: url(../img/cursor-pointer.png) 31 23,auto;
+			img{
+				position: absolute; top: 9px;
+				//right: 0;
+				height: 100px; width: auto;}
+		}
+	}
+	
+}

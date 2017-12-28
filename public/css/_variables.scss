@@ -1,0 +1,46 @@
+/* BASE VARIABLES
+ *******************/
+
+/* Sizes */
+$max-width: 1800px;
+$footerheight: 50px;
+
+/* Colors */
+$bg: #e3e3e3;
+$text-color: blue;
+$links: black;
+$hover: black;
+
+/* Fonts */
+$main: sans-serif;
+
+$font1: 13px;
+$font1-ls: 0.020em;
+
+$font2: 20px;
+$font2-ls: 0.025em;
+
+$font3: 30px;
+$font3-ls: 0.05em;
+
+
+/* Borders */
+$border: 1px solid #000;
+
+/* PADDINGS */
+$padding1: 25px;
+$page-padding: 135px;
+$page-padding-full: 180px;
+$marge1: 20px;
+$marge2: 35px;
+
+$gutter: 0.5em;
+$mobile-gutter: 13px;
+
+$headerHeight: 100px;
+
+/* Breakpoints */
+$cap: 1920px;
+$m: 850px;
+$s: 740px;
+$xs: 500px;

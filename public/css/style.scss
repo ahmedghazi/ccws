@@ -1,75 +1,24 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto+Mono');
 
-body {
-  padding: 30px;
-  font: 30px 'Roboto Mono', monospace, sans-serif;
-  color: blue;
-  &.loading{
-  	ul{opacity: 0.5}
-  }
-}
+/* RESET & BASE
+------------------ */
+@import "reset";
+@import "mixins";
+@import "variables";
+@import "reset";
 
-h1{
-	margin: 0;
-	margin-bottom: 1em;
-	font-size: 1em;
-	text-transform: uppercase;
-	font-weight: 400;
-}
-a {
-  color: blue;
-  text-decoration: none;
-  &:hover{color: #000}
-}
+/* =TYPE
+------------------ */
+@import "typography";
 
-ul{
-	padding: 0;
-	margin: 0;
-	margin-bottom: 2em;
-	//column-count: 2;
-	li{
-		list-style: none;
-		.site-inner{
-			position:relative;
-			.site-inner-date,
-			.site-inner-body{
-				display: inline-block;
-				vertical-align: top;
-				&.site-inner-date{margin-right: 1em;}
-				&.site-inner-body{max-width: 70%;}
-			}
-			span{
-				
-				
-				&.img{
-					display: inline;
-					vertical-align: bottom;
-				}
-			}
-			img{
-				
-				//opacity:0;
-				margin-left: .5em;
-				&.img404{
-					display: none;
-				}
-			}
+/* =LAYOUTS
+------------------ */
+@import "flexboxgrid";
+@import "layout";
+@import "liste";
 
-			&:hover{
-				z-index: 9999;
-				cursor: url(../img/cursor-pointer.png) 31 23,auto;
-				img{
-					position: absolute; top: 9px;
-					//right: 0;
-					height: 100px; width: auto;}
-			}
-		}
-		
-	}
-}
 
-.btn{
-	border: 3px solid;
-	padding: .3em 2em;
-	display: inline-block;
-}
+
+
+
+

@@ -1,12 +1,26 @@
-each post in posts
-    li
-        -var image = post.image
-        if post.link && post.name
+.liste-sort
+    .row
+        .col-xs-2
+            div.sort-date Date
+        .col-xs-4
+            div.sort-from Posted by
+        .col-xs-6
+            div.sort-name Name
+.liste
+    each post in posts
+        .item
             a(href="#{post.link}" target="_blank")
-                div.site-inner
-                    div.site-inner-date #{moment(post.updated_time).format('MM.DD.YY')}
-                    div.site-inner-body 
-                        span #{post.name}
-                        if image
-                            span.img
-                                img(src="#{image}" width="" height="22" onerror="this.className='img404'")
+                .row
+                    -var image = post.image
+                    if post.link && post.name
+                        //a(href="#{post.link}" target="_blank")
+                        .col-xs-2
+                            div.date #{moment(post.updated_time).format('MM.DD.YY')}
+                        .col-xs-4
+                            div.from #{post.from}
+                        .col-xs-6
+                                span #{post.name}
+                                if image
+                                    span.img
+                                        img(src="#{image}" width="" height="22" onerror="this.className='img404'")
+                    

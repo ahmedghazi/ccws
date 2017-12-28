@@ -1,0 +1,8 @@
+body {
+  padding: 30px;
+  font: 30px 'Roboto Mono', monospace, sans-serif;
+  color: blue;
+  &.loading{
+  	ul{opacity: 0.5}
+  }
+}
