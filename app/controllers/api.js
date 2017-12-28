@@ -68,7 +68,7 @@ router.get('/shot', function (req, res, next) {
     Post
       .find()
       .sort({updated_time: 'desc'})
-      .limit(30)
+      //.limit(30)
       .exec(function(err, posts) {
         async.each(posts,
           function(post, callback){
