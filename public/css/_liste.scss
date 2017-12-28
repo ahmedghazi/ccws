@@ -6,7 +6,7 @@
 .liste{
 	margin-bottom: 1em;
 	.item{
-		margin-bottom: .1em;
+		margin-bottom: .5em;
 		.col-xs-7{
 			position: relative;
 			cursor: url(../img/cursor-pointer.png) 31 23,auto;
@@ -19,6 +19,7 @@
 					height: auto;
 					max-height: 400px; width: auto;}
 			}
+			.website_url{font-size: $font2;}
 		}
 		.img{
 			display: inline;

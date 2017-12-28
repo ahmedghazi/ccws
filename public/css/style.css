@@ -2513,7 +2513,7 @@ body {
 .liste {
   margin-bottom: 1em; }
   .liste .item {
-    margin-bottom: .1em; }
+    margin-bottom: .5em; }
     .liste .item .col-xs-7 {
       position: relative;
       cursor: url(../img/cursor-pointer.png) 31 23, auto; }
@@ -2525,6 +2525,8 @@ body {
           height: auto;
           max-height: 400px;
           width: auto; }
+      .liste .item .col-xs-7 .website_url {
+        font-size: 18px; }
     .liste .item .img {
       display: inline;
       vertical-align: bottom; }

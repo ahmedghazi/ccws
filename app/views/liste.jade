@@ -3,7 +3,7 @@
         .col-xs-1
             div.sort-date Date
         .col-xs-7
-            div.sort-name Name
+            div.sort-name Website
         .col-xs-4
             div.sort-from.text-right Posted by
 .liste
@@ -19,10 +19,13 @@
                     
                     .col-xs-7
                         a(href="#{post.link}" target="_blank")
-                            span #{post.name}
-                            if image
-                                span.img
-                                    img(src="#{image}" width="" height="22" onerror="this.className='img404'")
+                            div.website_name
+                                span #{post.name}
+                                if image
+                                    span.img
+                                        img(src="#{image}" width="" height="17" onerror="this.className='img404'")
+                            div.website_url #{post.link}
+
                     
                     .col-xs-4
                         div.from.text-right #{post.from}
