@@ -119,8 +119,12 @@ exports.record = function(first_post_timestamp, _res){
                     callback();
                 }else{
                     Post.findOneAndUpdate(query, update, {upsert: true, 'new': true}, function (err, post, raw) {
-                        
-                        var screenshot = "public/uploads/ccws-"+slug(post.name)+".png";
+                        var slug = "";
+                        if(post.name)
+                            slug = slug(post.name);
+                        else 
+                            slug = Math.random().toString(36).substring(7);
+                        var screenshot = "public/uploads/ccws-"+slug+".png";
                         webshot(post.link, screenshot, function(error) {
 
                         //extract({ uri: post.link }, function (error, results) {
