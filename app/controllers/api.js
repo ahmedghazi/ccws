@@ -7,7 +7,7 @@ var express = require('express'),
   extract = require('meta-extractor'),
   helpers = require('../lib/helpers'),
   webshot = require('node-webshot'),
-  slug = require('limax'),
+  slug = require('slug'),
   FB = require('fb'),
   fbApp,
   client_id,
@@ -43,6 +43,22 @@ router.get('/oauth', function (req, res, next) {
   });
 });
 
+router.get('/slug', function (req, res, next) {
+  Post
+    .find()
+    .sort({updated_time: 'desc'})
+    .limit(30)
+    .exec(function(err, posts) {
+      var _slug = "";
+      if(post.name)
+          _slug = slug(post.name);
+      else 
+          _slug = Math.random().toString(36).substring(7);
+
+      console.log(post.name)
+      console.log(_slug)
+    });
+});
 
 router.get('/shot', function (req, res, next) {
   /*webshot('google.com', 'public/uploads/google.png', function(err) {
@@ -52,17 +68,20 @@ router.get('/shot', function (req, res, next) {
     Post
       .find()
       .sort({updated_time: 'desc'})
-      //.limit(10)
+      .limit(30)
       .exec(function(err, posts) {
         async.each(posts,
           function(post, callback){
-
-            var slug = "";
+            
+            var _slug = "";
             if(post.name)
-                slug = slug(post.name);
+                _slug = slug(post.name).toLowerCase();
             else 
-                slug = Math.random().toString(36).substring(7);
-            var screenshot = "public/uploads/ccws-"+slug+".png";
+                _slug = Math.random().toString(36).substring(7);
+            console.log(post.name)
+            console.log(_slug)
+
+            var screenshot = "public/uploads/ccws-"+_slug+".png";
             //var screenshot = "public/uploads/ccws-"+slug(post.name)+".png";
             //console.log(screenshot)
             webshot(post.link, screenshot, function(err) {
