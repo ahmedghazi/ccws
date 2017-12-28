@@ -3,10 +3,11 @@ var express = require('express'),
   mongoose = require('mongoose'),
   Post = mongoose.model('Post'),
   request = require('request'),
-  //schedule = require('node-schedule'),
   async = require('async'),
   extract = require('meta-extractor'),
   helpers = require('../lib/helpers'),
+  webshot = require('node-webshot'),
+  slug = require('limax'),
   FB = require('fb'),
   fbApp,
   client_id,
@@ -42,6 +43,45 @@ router.get('/oauth', function (req, res, next) {
   });
 });
 
+
+router.get('/shot', function (req, res, next) {
+  /*webshot('google.com', 'public/uploads/google.png', function(err) {
+    // screenshot now saved to google.png
+  });*/
+  //router.get('/image', function (req, res, next) {
+    Post
+      .find()
+      .sort({updated_time: 'desc'})
+      //.limit(10)
+      .exec(function(err, posts) {
+        async.each(posts,
+          function(post, callback){
+
+            var screenshot = "public/uploads/ccws-"+slug(post.name)+".png";
+            //console.log(screenshot)
+            webshot(post.link, screenshot, function(err) {
+              if(!err){
+
+                var query = {_id: post._id}
+                var update = {image: screenshot}
+                console.log(screenshot);
+             
+                Post.findOneAndUpdate(query, update, {upsert: true, 'new': true}, function (err, post, raw) {
+                  callback();
+                });
+              
+              }else{
+                callback();
+              }
+              
+            });
+          },
+          function(err){
+            res.send("done")
+          });
+      });
+  //});
+});
 
 router.get('/posts', function (req, res, next) {
   //helpers.

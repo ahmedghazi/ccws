@@ -5,7 +5,9 @@ var express = require('express'),
     Options = mongoose.model('Options'),
     Post = mongoose.model('Post'),
     request = require('request'),
-    extract = require('meta-extractor'),
+    //extract = require('meta-extractor'),
+    webshot = require('node-webshot'),
+    slug = require('limax'),
     moment = require('moment'),
     FB = require('fb'),
     fbApp,
@@ -117,7 +119,11 @@ exports.record = function(first_post_timestamp, _res){
                     callback();
                 }else{
                     Post.findOneAndUpdate(query, update, {upsert: true, 'new': true}, function (err, post, raw) {
-                        extract({ uri: post.link }, function (error, results) {
+                        
+                        var screenshot = "public/uploads/ccws-"+slug(post.name)+".png";
+                        webshot(post.link, screenshot, function(error) {
+
+                        //extract({ uri: post.link }, function (error, results) {
                             if(!error){       
                                 var image = '';
                                 if(results.ogImage)
