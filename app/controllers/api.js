@@ -5,7 +5,7 @@ var express = require('express'),
   request = require('request'),
   schedule = require('node-schedule'),
   async = require('async'),
-  //extract = require('meta-extractor'),
+  extract = require('meta-extractor'),
   FB = require('fb'),
   fbApp,
   client_id,
@@ -112,7 +112,7 @@ function record(res, _res){
   );
 }
 
-/*
+
 router.get('/image', function (req, res, next) {
   Post
     .find()
@@ -155,7 +155,7 @@ router.get('/image', function (req, res, next) {
         });
     });
 });
-*/
+
 
 router.get('/drop', function (req, res, next) {
   req.resetDb();
