@@ -7,7 +7,19 @@
 	margin-bottom: 1em;
 	.item{
 		margin-bottom: .1em;
-		.col-xs-7{position: relative;}
+		.col-xs-7{
+			position: relative;
+			cursor: url(../img/cursor-pointer.png) 31 23,auto;
+			&:hover{
+				z-index: 9999;
+				
+				img{
+					position: absolute; top: 9px;
+					//right: 0;
+					height: auto;
+					max-height: 400px; width: auto;}
+			}
+		}
 		.img{
 			display: inline;
 			vertical-align: bottom;
@@ -22,13 +34,7 @@
 
 		
 		&:hover{
-			z-index: 9999;
-			cursor: url(../img/cursor-pointer.png) 31 23,auto;
-			img{
-				position: absolute; top: 9px;
-				//right: 0;
-				height: auto;
-				max-height: 400px; width: auto;}
+			
 		}
 
 		.date,

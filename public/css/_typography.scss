@@ -15,6 +15,7 @@ h1{
 a {
 	color: $text-color;
 	text-decoration: none;
+	cursor: url(../img/cursor-pointer.png) 31 23,auto;
 	&:hover{color: #000}
 }
 

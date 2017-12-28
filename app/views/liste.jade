@@ -1,27 +1,28 @@
 .liste-sort
     .row
-        .col-xs-2
+        .col-xs-1
             div.sort-date Date
-        .col-xs-6
+        .col-xs-7
             div.sort-name Name
         .col-xs-4
             div.sort-from.text-right Posted by
 .liste
     each post in posts
         .item
-            a(href="#{post.link}" target="_blank")
-                .row
-                    -var image = post.image
-                    if post.link && post.name
-                        //a(href="#{post.link}" target="_blank")
-                        .col-xs-2
-                            div.date #{moment(post.updated_time).format('MM.DD.YY')}
-                        
-                        .col-xs-6
-                                span #{post.name}
-                                if image
-                                    span.img
-                                        img(src="#{image}" width="" height="22" onerror="this.className='img404'")
-                        
-                        .col-xs-4
-                            div.from.text-right #{post.from}
+            
+            .row
+                -var image = post.image
+                if post.link && post.name
+                    //a(href="#{post.link}" target="_blank")
+                    .col-xs-1
+                        div.date #{moment(post.updated_time).format('MM.DD.YY')}
+                    
+                    .col-xs-7
+                        a(href="#{post.link}" target="_blank")
+                            span #{post.name}
+                            if image
+                                span.img
+                                    img(src="#{image}" width="" height="22" onerror="this.className='img404'")
+                    
+                    .col-xs-4
+                        div.from.text-right #{post.from}

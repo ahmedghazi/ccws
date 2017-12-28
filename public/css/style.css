@@ -418,7 +418,8 @@ h1 {
 
 a {
   color: blue;
-  text-decoration: none; }
+  text-decoration: none;
+  cursor: url(../img/cursor-pointer.png) 31 23, auto; }
   a:hover {
     color: #000; }
 
@@ -2514,7 +2515,16 @@ body {
   .liste .item {
     margin-bottom: .1em; }
     .liste .item .col-xs-7 {
-      position: relative; }
+      position: relative;
+      cursor: url(../img/cursor-pointer.png) 31 23, auto; }
+      .liste .item .col-xs-7:hover {
+        z-index: 9999; }
+        .liste .item .col-xs-7:hover img {
+          position: absolute;
+          top: 9px;
+          height: auto;
+          max-height: 400px;
+          width: auto; }
     .liste .item .img {
       display: inline;
       vertical-align: bottom; }
@@ -2523,15 +2533,6 @@ body {
         vertical-align: baseline; }
         .liste .item .img img.img404 {
           display: none; }
-    .liste .item:hover {
-      z-index: 9999;
-      cursor: url(../img/cursor-pointer.png) 31 23, auto; }
-      .liste .item:hover img {
-        position: absolute;
-        top: 9px;
-        height: auto;
-        max-height: 400px;
-        width: auto; }
     .liste .item .date,
     .liste .item .from {
       font-size: 18px; }
