@@ -60,17 +60,16 @@ router.get('/slug', function (req, res, next) {
     });
 });
 
-router.get('/shot', function (req, res, next) {
-  /*webshot('google.com', 'public/uploads/google.png', function(err) {
-    // screenshot now saved to google.png
-  });*/
-  //router.get('/image', function (req, res, next) {
+router.get('/shot/:id', function (req, res, next) {
+  var postsPerPage = 10;
+  var skip = parseInt(req.params.id * postsPerPage);
     Post
       .find()
       .sort({updated_time: 'desc'})
-      //.limit(50)
+      .limit(postsPerPage)
+      .skip(skip)
       .exec(function(err, posts) {
-        res.send("processing")
+        //res.send("processing")
         async.each(posts,
           function(post, callback){
             
@@ -83,11 +82,12 @@ router.get('/shot', function (req, res, next) {
             //console.log(_slug)
 
             var screenshot = "public/uploads/crazy-cool-websites-"+_slug+".png";
-            //var screenshot = "public/uploads/ccws-"+slug(post.name)+".png";
-            //console.log(screenshot)
+            
             webshot(post.link, screenshot, function(err) {
               if(!err){
+            
                 screenshot = screenshot.replace("public/", "");
+            
                 var query = {_id: post._id}
                 var update = {image: screenshot}
                 console.log(screenshot);
@@ -97,13 +97,15 @@ router.get('/shot', function (req, res, next) {
                 });
               
               }else{
+                console.log(err)
                 callback();
               }
               
             });
           },
           function(err){
-            res.send("done")
+            var nextPage = parseFloat(req.params.id) + 1;
+            res.redirect("/api/shot/"+nextPage);
           });
       });
   //});
