@@ -3,17 +3,11 @@ extends layout
 block content
     -var len = posts.length
     h1 #{title} (#{len})
-    //p Welcome to #{title}
+    
     ul
-      each post in posts
-        li
-            -var image = post.image
-            if post.link
-                a(href="#{post.link}" target="_blank")
-                    div.site-inner
-                        div.site-inner-date #{post.updated_time.getFullYear()}
-                        div.site-inner-body 
-                            span #{post.name}
-                            if image
-                                span.img
-                                    img(src="#{image}" width="" height="13" onerror="this.className='img404'")
+        include liste
+        
+
+    div.pagination
+        input(type='hidden' value='1' id='page')
+        a(href='#' class='btn more') Moar

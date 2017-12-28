@@ -2,8 +2,11 @@
 
 body {
   padding: 30px;
-  font: 18px 'Roboto Mono', monospace, sans-serif;
+  font: 30px 'Roboto Mono', monospace, sans-serif;
   color: blue;
+  &.loading{
+  	ul{opacity: 0.5}
+  }
 }
 
 h1{
@@ -11,6 +14,7 @@ h1{
 	margin-bottom: 1em;
 	font-size: 1em;
 	text-transform: uppercase;
+	font-weight: 400;
 }
 a {
   color: blue;
@@ -21,7 +25,8 @@ a {
 ul{
 	padding: 0;
 	margin: 0;
-	column-count: 2;
+	margin-bottom: 2em;
+	//column-count: 2;
 	li{
 		list-style: none;
 		.site-inner{
@@ -51,12 +56,19 @@ ul{
 			}
 
 			&:hover{
+				z-index: 9999;
 				img{
 					position: absolute; top: 9px;
-					right: 0;
+					//right: 0;
 					height: 100px; width: auto;}
 			}
 		}
 		
 	}
+}
+
+.btn{
+	border: 3px solid;
+	padding: .3em 2em;
+	display: inline-block;
 }
