@@ -68,8 +68,9 @@ router.get('/shot', function (req, res, next) {
     Post
       .find()
       .sort({updated_time: 'desc'})
-      //.limit(30)
+      //.limit(50)
       .exec(function(err, posts) {
+        res.send("processing")
         async.each(posts,
           function(post, callback){
             
@@ -79,7 +80,7 @@ router.get('/shot', function (req, res, next) {
             else 
                 _slug = Math.random().toString(36).substring(7);
             
-            console.log(_slug)
+            //console.log(_slug)
 
             var screenshot = "public/uploads/crazy-cool-websites-"+_slug+".png";
             //var screenshot = "public/uploads/ccws-"+slug(post.name)+".png";
@@ -132,6 +133,19 @@ router.get('/posts', function (req, res, next) {
       console.log("collect callback")
   });
 });
+
+router.get('/posts-all', function (req, res, next) {
+  FB.setAccessToken('398286323958628|IrwxIREQmoqa0x8G2zTIj7AmzP8');
+  FB.api('393558204075688/feed?limit=100&&fields=id,message,name,caption,description,updated_time,link,from,type', function (_res) {
+    if(!_res || _res.error) {
+     console.log(!_res ? 'error occurred' : _res.error);
+     return res.send(_res.error);
+    }
+    
+    record(res, _res);
+  });
+});
+
 
 function record(res, _res){
   if(!_res || _res.error) {

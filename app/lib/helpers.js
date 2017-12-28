@@ -130,16 +130,12 @@ exports.record = function(first_post_timestamp, _res){
 
                         //extract({ uri: post.link }, function (error, results) {
                             if(!error){       
-                                var image = '';
-                                if(results.ogImage)
-                                    image = results.ogImage;
-                                else if(results.twitterImage){
-                                    image = results.twitterImage;
-                                }
+                                
+                                screenshot = screenshot.replace("public/", "");
 
                                 var query = {_id: post._id}
-                                var update = {image: image}
-                                console.log(image);
+                                var update = {image: screenshot}
+                                console.log(screenshot);
                                 
                                 Post.findOneAndUpdate(query, update, {upsert: true, 'new': true}, function (err, post, raw) {
                                     callback();
