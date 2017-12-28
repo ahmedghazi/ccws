@@ -22,12 +22,28 @@ ul {
   column-count: 2; }
   ul li {
     list-style: none; }
-    ul li span {
-      display: inline-block;
-      vertical-align: top; }
-      ul li span.date:after {
-        content: "-";
-        margin: 0 .5em;
-        display: inline-block; }
-      ul li span.name {
-        max-width: 70%; }
+    ul li .site-inner {
+      position: relative; }
+      ul li .site-inner .site-inner-date,
+      ul li .site-inner .site-inner-body {
+        display: inline-block;
+        vertical-align: top; }
+        ul li .site-inner .site-inner-date.site-inner-date,
+        ul li .site-inner .site-inner-body.site-inner-date {
+          margin-right: 1em; }
+        ul li .site-inner .site-inner-date.site-inner-body,
+        ul li .site-inner .site-inner-body.site-inner-body {
+          max-width: 70%; }
+      ul li .site-inner span.img {
+        display: inline;
+        vertical-align: bottom; }
+      ul li .site-inner img {
+        margin-left: .5em; }
+        ul li .site-inner img.img404 {
+          display: none; }
+      ul li .site-inner:hover img {
+        position: absolute;
+        top: 9px;
+        right: 0;
+        height: 100px;
+        width: auto; }

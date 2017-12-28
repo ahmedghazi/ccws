@@ -24,18 +24,39 @@ ul{
 	column-count: 2;
 	li{
 		list-style: none;
-		span{
-			display: inline-block;
-			vertical-align: top;
-			&.date:after{
-				content: "-";
-				margin: 0 .5em;
+		.site-inner{
+			position:relative;
+			.site-inner-date,
+			.site-inner-body{
 				display: inline-block;
+				vertical-align: top;
+				&.site-inner-date{margin-right: 1em;}
+				&.site-inner-body{max-width: 70%;}
 			}
-			&.name{
-				max-width: 70%;
+			span{
 				
+				
+				&.img{
+					display: inline;
+					vertical-align: bottom;
+				}
+			}
+			img{
+				
+				//opacity:0;
+				margin-left: .5em;
+				&.img404{
+					display: none;
+				}
+			}
+
+			&:hover{
+				img{
+					position: absolute; top: 9px;
+					right: 0;
+					height: 100px; width: auto;}
 			}
 		}
+		
 	}
 }

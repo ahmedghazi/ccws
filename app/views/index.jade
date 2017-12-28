@@ -7,7 +7,13 @@ block content
     ul
       each post in posts
         li
+            -var image = post.image
             if post.link
                 a(href="#{post.link}" target="_blank")
-                    span.date #{post.updated_time.getFullYear()}
-                    span.name  #{post.name}
+                    div.site-inner
+                        div.site-inner-date #{post.updated_time.getFullYear()}
+                        div.site-inner-body 
+                            span #{post.name}
+                            if image
+                                span.img
+                                    img(src="#{image}" width="" height="13" onerror="this.className='img404'")
