@@ -1,8 +1,9 @@
 extends layout
 
 block content
-    -var len = posts.length
-    h1 #{title} (#{len})
+    -var len = 3102
+    -var now = new Date();
+    h1 #{title} / 2013-#{now.getFullYear()} / (#{len})
     
     ul
         include liste
