@@ -57,7 +57,13 @@ router.get('/shot', function (req, res, next) {
         async.each(posts,
           function(post, callback){
 
-            var screenshot = "public/uploads/ccws-"+slug(post.name)+".png";
+            var slug = "";
+            if(post.name)
+                slug = slug(post.name);
+            else 
+                slug = Math.random().toString(36).substring(7);
+            var screenshot = "public/uploads/ccws-"+slug+".png";
+            //var screenshot = "public/uploads/ccws-"+slug(post.name)+".png";
             //console.log(screenshot)
             webshot(post.link, screenshot, function(err) {
               if(!err){
