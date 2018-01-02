@@ -173,7 +173,7 @@ exports.record = function(min, _res){
                     console.log("statusCode",response.statusCode);
                     //console.log(body);
 
-                    //self.record(first_post_timestamp, JSON.parse(body))
+                    self.record(first_post_timestamp, JSON.parse(body))
                 }).setMaxListeners(0);
             }else{
                 console.log("done")
