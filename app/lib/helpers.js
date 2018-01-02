@@ -121,7 +121,7 @@ exports.record = function(min, _res){
                 }
                 //console.log("post updated_time : "+ _post.updated_time)
                 console.log(min, Math.round(+new Date(_post.updated_time)/1000))
-                if(min < Math.round(+new Date(_post.updated_time)/1000)){
+                if(min > Math.round(+new Date(_post.updated_time)/1000)){
                     _res.paging = null;
                     callback();
                 }else{
