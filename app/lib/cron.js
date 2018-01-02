@@ -34,7 +34,7 @@ console.log('cronStart', new Date());
             });
         });
 
-        helpers.set_total();
+        //helpers.set_total();
         /*
         var d = new Date();
         //d.setHours ( d.getHours() - 3 );

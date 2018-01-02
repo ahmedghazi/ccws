@@ -177,6 +177,7 @@ exports.record = function(min, _res){
                 }).setMaxListeners(0);
             }else{
                 console.log("done")
+                self.set_total();
             }
         }
     );
