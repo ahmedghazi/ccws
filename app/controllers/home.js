@@ -2,6 +2,7 @@ var express = require('express'),
   router = express.Router(),
   mongoose = require('mongoose'),
   Post = mongoose.model('Post'),
+  Options = mongoose.model('Options'),
   postsPerPage;
 
 module.exports = function (app) {
@@ -19,11 +20,19 @@ router.get('/', function (req, res, next) {
           console.log(err);
           return next(err);
       }
+     
+      Options
+        .findOne({'meta.key': 'total_posts'})
+        .exec(function(err, option) {
+          console.log(option.meta)
+          return res.render('index', {
+            title: 'Crazy cool websites Archive',
+            posts: posts,
+            total_posts: option.meta.value
+          });
+        });
       //console.log(app.get('title'));
-      return res.render('index', {
-        title: 'Crazy cool websites Archive',
-        posts: posts
-      });
+      
   });
 });
 

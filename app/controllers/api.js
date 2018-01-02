@@ -111,17 +111,39 @@ router.get('/shot/:id', function (req, res, next) {
   //});
 });
 
-router.get('/posts', function (req, res, next) {
-  //helpers.
-  /*FB.setAccessToken('398286323958628|IrwxIREQmoqa0x8G2zTIj7AmzP8');
-  FB.api('393558204075688/feed?limit=100&&fields=id,message,name,caption,description,updated_time,link,from,type', function (_res) {
-    if(!_res || _res.error) {
-     console.log(!_res ? 'error occurred' : _res.error);
-     return res.send(_res.error);
+router.get('/last', function (req, res, next) {
+  Post
+    .find()
+    .limit(10)
+    .sort({"updated_time": -1})
+    //.limit(postsPerPage)
+    .exec(function(err, posts) {
+    if (err) {
+        console.log(err);
+        return next(err);
     }
-    
-    record(res, _res);
-  });*/
+    var last = posts[0];
+    var time = new Date(last.updated_time);
+    var unix = Math.round(time/1000)
+    //return res.json(unix)
+    Options.findOneAndUpdate(
+        {'meta.key': 'first_post_timestamp'}, 
+        {'meta.value': unix}, 
+        {upsert: true, 'new': false}, 
+        function (err, options, raw) {
+        if (err) {
+            return console.log(err);
+        } 
+
+        //callback(err, {success:true});
+    });
+
+  });
+  
+});
+
+router.get('/posts', function (req, res, next) {
+  /*
   helpers.init_timestamp();
   
   var d = new Date();
@@ -133,7 +155,16 @@ router.get('/posts', function (req, res, next) {
   
   helpers.collect(max, function(){
       console.log("collect callback")
+  });*/
+  helpers.init_timestamp(function(time){
+      helpers.collect(time, function(){
+          console.log("collect callback")
+      });
   });
+});
+
+router.get('/count', function (req, res, next) {
+  helpers.set_total();
 });
 
 router.get('/posts-all', function (req, res, next) {

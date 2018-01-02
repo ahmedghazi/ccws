@@ -25,8 +25,20 @@ exports.init_fb = function(){
     fbApp = FB.extend({appId: client_id, appSecret: client_secret});
 };
 
-exports.init_timestamp = function(){
-    var d = new Date();
+exports.set_total = function(){
+    var self = this;
+    Post
+        .find()
+        .exec(function(err, posts) {
+            self.updateOptions("total_posts", posts.length, function(err,resp){
+                console.log(posts.length)
+            });
+        });
+};
+
+exports.init_timestamp = function(callback){
+    var self = this;
+    /*var d = new Date();
     //d.setHours ( d.getHours() - 3 );
     d.setHours(0,0,0,0);
 
@@ -38,58 +50,53 @@ exports.init_timestamp = function(){
         if (err) {
             return console.log(err);
         } 
-
+        callback()
         //callback(err, {success:true});
-    });
+    });*/
+    Post
+        .find()
+        .limit(5)
+        .sort({"updated_time": -1})
+        //.limit(postsPerPage)
+        .exec(function(err, posts) {
+            if (err) {
+                console.log(err);
+                return next(err);
+            }
+            var last = posts[0];
+            var time = new Date(last.updated_time);
+            var unix = Math.round(time/1000)
+      //return res.json(unix)
+            self.updateOptions("last_post_timestamp", unix, function(____err,resp){
+                callback(unix)
+            });
+        });
+
+  
 };
 
 
-exports.collect = function(max, callback){
+exports.collect = function(min, callback){
     var self = this;
     console.log("=========================")
     console.log("collect start")
     /*var d = new Date();
         d.setHours(0,0,0,0);
     var max = Math.round(d/1000);*/
-    console.log("max: ",max)
+    console.log("min: ",min)
 
-    Options
-        .findOne({ 'meta.key': 'first_post_timestamp' })
-        .exec(function(err, option) {
-        if (err) return handleError(err);
-        
-        //console.log(option)
-        first_post_timestamp = option.meta.value;
-        if(!first_post_timestamp)first_post_timestamp = Math.round(+new Date()/1000);
-
-        console.log("db - first_post_timestamp: ",first_post_timestamp)
-
-        if(first_post_timestamp < max){
-            console.log("first_post_timestamp < max")
-            self.updateOptions("first_post_timestamp", "", function(____err,resp){
-                //return res.redirect('/api/feed/media/all');
-                console.log("collect end, max reached")
-                console.log("=========================")
-                callback();
-            });
-        }else{
-
-            FB.setAccessToken('398286323958628|IrwxIREQmoqa0x8G2zTIj7AmzP8');
-            FB.api('393558204075688/feed?limit=10&&fields=id,message,name,caption,description,updated_time,link,from,type', function (_res) {
-                if(!_res || _res.error) {
-                console.log(!_res ? 'error occurred' : _res.error);
-               //return res.send(_res.error);
-                }
-              
-                self.record(first_post_timestamp,_res);
-            });
-            
-
+    FB.setAccessToken('398286323958628|IrwxIREQmoqa0x8G2zTIj7AmzP8');
+    FB.api('393558204075688/feed?limit=10&&fields=id,message,name,caption,description,updated_time,link,from,type', function (_res) {
+        if(!_res || _res.error) {
+        console.log(!_res ? 'error occurred' : _res.error);
+       //return res.send(_res.error);
         }
+      
+        self.record(min,_res);
     });
 };
 
-exports.record = function(first_post_timestamp, _res){
+exports.record = function(min, _res){
     var self = this;
     if(!_res || _res.error) {
         console.log(!_res ? 'error occurred' : _res.error);
@@ -113,8 +120,8 @@ exports.record = function(first_post_timestamp, _res){
                     from: _post.from.name
                 }
                 //console.log("post updated_time : "+ _post.updated_time)
-                console.log(first_post_timestamp, Math.round(+new Date(_post.updated_time)/1000))
-                if(first_post_timestamp < Math.round(+new Date(_post.updated_time)/1000)){
+                console.log(min, Math.round(+new Date(_post.updated_time)/1000))
+                if(min < Math.round(+new Date(_post.updated_time)/1000)){
                     _res.paging = null;
                     callback();
                 }else{
@@ -166,7 +173,7 @@ exports.record = function(first_post_timestamp, _res){
                     console.log("statusCode",response.statusCode);
                     //console.log(body);
 
-                    self.record(first_post_timestamp, JSON.parse(body))
+                    //self.record(first_post_timestamp, JSON.parse(body))
                 }).setMaxListeners(0);
             }else{
                 console.log("done")

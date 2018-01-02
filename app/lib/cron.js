@@ -18,8 +18,8 @@ exports.cronStop = function(next){
 exports.cronStart = function(app, next){
     var rule = new schedule.RecurrenceRule();
     //rule.dayOfWeek = [1, 2, 3, 4, 5];
-    rule.dayOfWeek = "*";
-    //rule.hour = "*";
+    //rule.dayOfWeek = "*";
+    rule.hour = "*";
     //rule.minute = "33";
     //rule.minute = "17";
     //rule.second = "50";
@@ -28,8 +28,14 @@ console.log('cronStart', new Date());
     schedule.scheduleJob("ccws-cron", rule, function(){
         console.log('--------honor-cron', new Date());
 
-        helpers.init_timestamp();
-        
+        helpers.init_timestamp(function(time){
+            helpers.collect(time, function(){
+                console.log("collect callback")
+            });
+        });
+
+        helpers.set_total();
+        /*
         var d = new Date();
         //d.setHours ( d.getHours() - 3 );
         d.setHours(0,0,0,0);
@@ -40,7 +46,7 @@ console.log('cronStart', new Date());
         helpers.collect(max, function(){
             console.log("collect callback")
         });
-
+        */
         
     });
 };
