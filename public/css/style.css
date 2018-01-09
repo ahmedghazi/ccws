@@ -2708,7 +2708,7 @@ header {
     transform: translate(-100%, 0); } }
 .contributors {
   margin-bottom: 40px;
-  column-count: 2; }
+  column-count: 4; }
   .contributors .contributor {
-    font-size: 35px;
+    font-size: 30px;
     margin-bottom: 0.2em; }
