@@ -6,7 +6,7 @@ var express = require('express'),
   postsPerPage;
 
 module.exports = function (app) {
-  postsPerPage = 10;
+  postsPerPage = 30;
   app.use('/', router);
 };
 
@@ -32,6 +32,31 @@ router.get('/', function (req, res, next) {
           });
         });
       //console.log(app.get('title'));
+      
+  });
+});
+
+router.get('/contributors', function (req, res, next) {
+  return Post
+      .find()
+      //.sort({updated_time: 'desc'})
+      //.limit(postsPerPage)
+      .exec(function(err, posts) {
+      if (err) {
+          console.log(err);
+          return next(err);
+      }
+      var tmp = [];
+      for (var i = 0, len = posts.length; i < len; i++) {
+        tmp.push(posts[i].from);
+      }
+      var contributors = Array.from(new Set(tmp))
+      //return res.send(contributors)
+      return res.render('contributors', {
+        title: 'CRAZY COOL WEBSITES Archive',
+        contributors: contributors,
+        total: contributors.length
+      });
       
   });
 });

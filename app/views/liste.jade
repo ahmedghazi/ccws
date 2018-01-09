@@ -2,22 +2,30 @@ each post in posts
     .item
         a(href="#{post.link}" target="_blank")
             .row
-                -var image = post.image
+               
                 if post.link && post.name
                     
                     .col-xs-6
                         div.title
                             div.autoradio
                                 span.name #{post.name}
-                                span.url #{post.link}
+                         
                         div.date
-                            span POSTED #{moment(post.updated_time).format('MM.DD.YY HH:MM')}
+                            //span POSTED #{moment(post.updated_time).format('MM.DD.YY HH:MM')}
+                            .row
+                                .col-xs-6
+                                    div POSTED #{moment(post.updated_time).format('MM.DD.YY HH:MM')}
+                                .col-xs-6
+                                    div.url.text-right #{post.link}
                     .col-xs-6
-                        .row
+                        .row.bottom-xs
                             .col-xs-6
+                                -var image = post.image
                                 if image
-                                    figure(style="background-color:")
-                                        img(src="#{image}" width="" height="60" onerror="this.className='img404'")
+                                    figure
+                                        if post.color
+                                            div.placeholder(style="background-color:##{post.color}")
+                                        img(src="#{root_url}/#{image}" width="" height="94" onerror="this.className='img404'")
                             .col-xs-6
                                 div.from.text-right #{post.from}
 

@@ -5,15 +5,32 @@
 		cursor: url(../img/cursor-pointer.png) 31 23,auto;
 
 		figure{
-			display: block;
+			display: inline-block;
 			vertical-align: top;
 			background: white;
+			height: 94px;
+			position: relative;
+			width: auto;
+			.placeholder{
+				background: $grey;
+				position: absolute;
+				width: 100%; height: 100%;
+				opacity: 0;
+				display: none;
+				@include anime();
+				.loading &{
+					opacity: 1; z-index: 1;
+					display: block;
+				}
+			}
 			img{
-				//margin-left: .5em;
-				vertical-align: baseline;
+				position: relative;
+				
+				vertical-align: top;
 				&.img404{
 					display: none;
 				}
+				
 			}
 		}
 		.title{
@@ -34,24 +51,34 @@
 					//display: inline-block;
 					flex-shrink: 0;
 					&.name{margin-right: 0.5em}
-
 				}
 			}
+		}
+
+		.url{
+			white-space:nowrap;
+			text-overflow: ellipsis;
+			width: 100%;
+			overflow: hidden;
 		}
 	
 		
 		&:hover{
 			z-index: 9999;
-			.autoradio{
+			.autoradio.can{
 				text-overflow:initial;
 				overflow-x: auto;
 				width: auto;
 				animation: autoradio 5s linear infinite alternate;
-				.url{color: blue!important}
+				
 			}
+			.url{color: blue!important}
 			img{
-				position: absolute; top: 0;
-				max-width: calc(50vw - 29px); 
+				position: fixed; 
+				top: 50%;
+				//top: calc(100vh - )
+				transform: translateY(-50%);
+				max-width: calc(50vw); 
 				height: auto;
 				z-index: 999;
 			}

@@ -2,15 +2,25 @@ var scrollController = (function () {
     
     var loading = false;
 
+    titles();
     infinite()
     
+    function titles(){
+        var max = $(".autoradio").width()
+        $(".autoradio:not(.can) .name").each(function(idx, el){
+            var w = $(el).width();
+            console.log(w, max)
+            if(w > max)$(el).parent().addClass("can");
+        })
+    }
+
     function infinite(){
         
         var threshold = 200;
         $(window).scroll(function() {       
             //console.log($(window).scrollTop() + $(window).height() + threshold, $(document).height())
             if(($(window).scrollTop() + $(window).height() + threshold) > $(document).height()) {
-                if(!loading)$(".more").click();
+                if(!loading && $(".liste"))$(".more").click();
             }
 
             if($(window).scrollTop() > threshold){
@@ -45,7 +55,7 @@ var scrollController = (function () {
 
                     $("body").removeClass("is-exiting");
                     loading = false;
-
+                    titles();
                 });
         });
     }

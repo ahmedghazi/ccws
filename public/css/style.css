@@ -432,13 +432,13 @@ img[data-sizes="auto"] {
   font-style: normal;
   font-weight: 400; }
 body {
-  font: 18px "TH Grotesk SEMI ( CCWA )", monospace, sans-serif;
+  font: 16px "TH Grotesk SEMI ( CCWA )", monospace, sans-serif;
   color: black; }
 
 h1,
 h2 {
   margin: 0;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 400; }
 
 a {
@@ -463,7 +463,7 @@ a {
     color: black; }
 
 .title {
-  font-size: 74px; }
+  font-size: 70px; }
 
 /* =COMPONENTS
 ------------------ */
@@ -2585,8 +2585,8 @@ header {
   header nav.menu li {
     cursor: url(../img/cursor-pointer.png) 31 23, auto;
     line-height: 1.2em;
-    min-height: 19px;
-    font-size: 18px; }
+    min-height: 17px;
+    font-size: 16px; }
     header nav.menu li #s {
       display: block;
       background-color: transparent;
@@ -2620,7 +2620,7 @@ header {
     justify-content: space-between;
     line-height: 1.2em; }
     header nav.extra * {
-      min-height: 19px; }
+      min-height: 17px; }
     header nav.extra .timestamps ul {
       display: flex;
       justify-content: space-between;
@@ -2636,11 +2636,27 @@ header {
     margin-bottom: 20px;
     cursor: url(../img/cursor-pointer.png) 31 23, auto; }
     .liste .item figure {
-      display: block;
+      display: inline-block;
       vertical-align: top;
-      background: white; }
+      background: white;
+      height: 94px;
+      position: relative;
+      width: auto; }
+      .liste .item figure .placeholder {
+        background: #f3f3f3;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        display: none;
+        transition: all 0.2s ease-in-out 0s; }
+        .loading .liste .item figure .placeholder {
+          opacity: 1;
+          z-index: 1;
+          display: block; }
       .liste .item figure img {
-        vertical-align: baseline; }
+        position: relative;
+        vertical-align: top; }
         .liste .item figure img.img404 {
           display: none; }
     .liste .item .title {
@@ -2660,19 +2676,25 @@ header {
           flex-shrink: 0; }
           .liste .item .title .autoradio span.name {
             margin-right: 0.5em; }
+    .liste .item .url {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      width: 100%;
+      overflow: hidden; }
     .liste .item:hover {
       z-index: 9999; }
-      .liste .item:hover .autoradio {
+      .liste .item:hover .autoradio.can {
         text-overflow: initial;
         overflow-x: auto;
         width: auto;
         animation: autoradio 5s linear infinite alternate; }
-        .liste .item:hover .autoradio .url {
-          color: blue !important; }
+      .liste .item:hover .url {
+        color: blue !important; }
       .liste .item:hover img {
-        position: absolute;
-        top: 0;
-        max-width: calc(50vw - 29px);
+        position: fixed;
+        top: 50%;
+        transform: translateY(-50%);
+        max-width: calc(50vw);
         height: auto;
         z-index: 999; }
 
@@ -2684,3 +2706,7 @@ header {
     transform: translate(0, 0); }
   100% {
     transform: translate(-100%, 0); } }
+.contributors {
+  margin-bottom: 40px; }
+  .contributors .contributor {
+    font-size: 70px; }
