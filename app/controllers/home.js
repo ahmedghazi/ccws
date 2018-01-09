@@ -117,6 +117,7 @@ router.get('/search/:term', function (req, res, next) {
           { from : { $regex: req.params.term, $options: 'i' }}
         ]
       })
+      .sort({updated_time: 'desc'})
       .exec(function(err, posts) {
       if (err) {
           console.log(err);
@@ -149,6 +150,7 @@ router.get('/s/:term', function (req, res, next) {
           { from : { $regex: req.params.term, $options: 'i' }}
         ]
       })
+      .sort({updated_time: 'desc'})
       .exec(function(err, posts) {
         if (err) {
             console.log(err);
