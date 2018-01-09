@@ -51,7 +51,7 @@ router.get('/contributors', function (req, res, next) {
         tmp.push(posts[i].from);
       }
       var contributors = Array.from(new Set(tmp))
-      //return res.send(contributors)
+      contributors.sort();
       return res.render('contributors', {
         title: 'CRAZY COOL WEBSITES Archive',
         contributors: contributors,

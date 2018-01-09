@@ -1,5 +1,7 @@
 .contributors{
 	margin-bottom: $marge3;
+	column-count: 2;
+  	//column-gap: $marge3;
 	.contributor{
 		font-size:$font2 /2;
 		margin-bottom: 0.2em;
