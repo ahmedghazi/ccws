@@ -2,8 +2,16 @@ var scrollController = (function () {
     
     var loading = false;
 
-    titles();
-    infinite()
+    init();
+
+    function init(){
+        titles();
+        infinite()
+
+        pubsub.on("navChanged", function(){
+            titles();
+        });
+    }
     
     function titles(){
         var max = $(".autoradio").width()

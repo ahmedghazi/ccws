@@ -432,13 +432,13 @@ img[data-sizes="auto"] {
   font-style: normal;
   font-weight: 400; }
 body {
-  font: 16px "TH Grotesk SEMI ( CCWA )", monospace, sans-serif;
+  font: 15px "TH Grotesk SEMI ( CCWA )", helvetica, monospace, sans-serif;
   color: black; }
 
 h1,
 h2 {
   margin: 0;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 400; }
 
 a {
@@ -2585,8 +2585,8 @@ header {
   header nav.menu li {
     cursor: url(../img/cursor-pointer.png) 31 23, auto;
     line-height: 1.2em;
-    min-height: 17px;
-    font-size: 16px; }
+    min-height: 16px;
+    font-size: 15px; }
     header nav.menu li #s {
       display: block;
       background-color: transparent;
@@ -2620,7 +2620,7 @@ header {
     justify-content: space-between;
     line-height: 1.2em; }
     header nav.extra * {
-      min-height: 17px; }
+      min-height: 16px; }
     header nav.extra .timestamps ul {
       display: flex;
       justify-content: space-between;
@@ -2662,8 +2662,7 @@ header {
     .liste .item .title {
       overflow-x: hidden;
       position: relative;
-      min-height: 70px;
-      margin-bottom: 10px; }
+      min-height: 70px; }
       .liste .item .title .autoradio {
         height: 100%;
         position: absolute;

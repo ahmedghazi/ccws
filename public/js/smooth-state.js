@@ -28,7 +28,7 @@ var smoothState = (function () {
                     setTimeout(function(){
                         //$("body").attr('class', $("[name=bc]").val())
                         console.log("onReady")
-                        //pubsub.emit("navChanged", null);
+                        pubsub.emit("navChanged", null);
                         if($(".item") && $(".item").length - 30)$(".more").hide()
                         $container.removeClass('is-exiting');
                     }, 100);
