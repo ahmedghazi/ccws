@@ -55,7 +55,7 @@ router.get('/contributors', function (req, res, next) {
       return res.render('contributors', {
         title: 'CRAZY COOL WEBSITES Archive',
         contributors: contributors,
-        total: contributors.length
+        total_posts: contributors.length
       });
       
   });
