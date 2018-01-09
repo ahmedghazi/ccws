@@ -6,7 +6,7 @@ var express = require('express'),
   postsPerPage;
 
 module.exports = function (app) {
-  postsPerPage = 100;
+  postsPerPage = 10;
   app.use('/', router);
 };
 
@@ -26,13 +26,19 @@ router.get('/', function (req, res, next) {
         .exec(function(err, option) {
           console.log(option.meta)
           return res.render('index', {
-            title: 'Crazy cool websites Archive',
+            title: 'CRAZY COOL WEBSITES Archive',
             posts: posts,
             total_posts: option.meta.value
           });
         });
       //console.log(app.get('title'));
       
+  });
+});
+
+router.get('/about', function (req, res, next) {
+  return res.render('about', {
+    title: 'CRAZY COOL WEBSITES Archive'
   });
 });
 
@@ -50,12 +56,114 @@ router.get('/page/:id', function (req, res, next) {
         }
         //console.log(app.get('title'));
         return res.render('liste', {
-          //title: 'Crazy cool websites Archive',
+          //title: 'CRAZY COOL WEBSITES Archive',
           posts: posts
         });
   });
   
 });
+
+router.get('/random', function (req, res, next) {
+  //var skip = parseInt(req.params.id * postsPerPage);
+  return Post
+      .aggregate([
+        { $sample: { size: postsPerPage } }
+      ])
+      .exec(function(err, posts) {
+        if (err) {
+            console.log(err);
+            return next(err);
+        }
+        Options
+          .findOne({'meta.key': 'total_posts'})
+          .exec(function(err, option) {
+            console.log(option.meta)
+            return res.render('index', {
+              title: 'CRAZY COOL WEBSITES Archive',
+              posts: posts,
+              total_posts: option.meta.value
+            });
+          });
+  });
+  
+});
+
+router.get('/random/page/:id', function (req, res, next) {
+  //var skip = parseInt(req.params.id * postsPerPage);
+  return Post
+      .aggregate([
+        { $sample: { size: postsPerPage } }
+      ])
+      .exec(function(err, posts) {
+        if (err) {
+            console.log(err);
+            return next(err);
+        }
+        //console.log(app.get('title'));
+        return res.render('liste', {
+          title: 'CRAZY COOL WEBSITES Archive',
+          posts: posts
+        });
+  });
+  
+});
+
+router.get('/search/:term', function (req, res, next) {
+  return Post
+      .find({
+        "$or": [
+          { name : { $regex: req.params.term, $options: 'i' }},
+          { link : { $regex: req.params.term, $options: 'i' }},
+          { from : { $regex: req.params.term, $options: 'i' }}
+        ]
+      })
+      .exec(function(err, posts) {
+      if (err) {
+          console.log(err);
+          return next(err);
+      }
+     
+      Options
+        .findOne({'meta.key': 'total_posts'})
+        .exec(function(err, option) {
+          console.log(option.meta)
+          return res.render('index', {
+            title: 'CRAZY COOL WEBSITES Archive',
+            posts: posts,
+            total_posts: posts.length
+          });
+        });
+      //console.log(app.get('title'));
+      
+  });
+  
+});
+
+router.get('/s/:term', function (req, res, next) {
+  //var skip = parseInt(req.params.id * postsPerPage);
+  return Post
+      .find({
+        "$or": [
+          { name : { $regex: req.params.term, $options: 'i' }},
+          { link : { $regex: req.params.term, $options: 'i' }},
+          { from : { $regex: req.params.term, $options: 'i' }}
+        ]
+      })
+      .exec(function(err, posts) {
+        if (err) {
+            console.log(err);
+            return next(err);
+        }
+        //console.log(app.get('title'));
+        return res.render('liste', {
+          title: 'CRAZY COOL WEBSITES Archive',
+          posts: posts
+        });
+  });
+  
+});
+
+
 
 router.get('/all', function (req, res, next) {
   return Post

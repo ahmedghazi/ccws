@@ -1,0 +1,37 @@
+.row
+    .col-xs-6
+        h1 
+            a(href="/") 
+                span #{title} 
+                if total_posts
+                    span (#{total_posts})
+    .col-xs-6
+        .row
+            .col-xs-6
+                nav.menu
+                    ul
+                        li
+                            input(type="text" id="s" placeholder="SEARCH" autocomplete="off" value="SEARCH")
+                        li
+                            a(href="/random") RANDOM
+                        //li
+                            span#images-view IMAGES VIEW
+                        li
+                            span#contributors-toggle.active CONTRIBUTORS
+                        
+            .col-xs-6
+                nav.extra
+                    .timestamps
+                        ul
+                            li
+                                div.berlin BERLIN
+                                div.time #{moment().tz("Europe/Berlin").format("ha")}
+                            li
+                                div.nyc NEW YORK
+                                div.time #{moment().tz("America/New_York").format("ha")}
+                            li
+                                div.tokyo TOKYO
+                                div.time #{moment().tz("Asia/Tokyo").format("ha")}
+
+                    .about
+                        a(href="/about") ABOUT

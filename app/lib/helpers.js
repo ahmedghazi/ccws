@@ -10,13 +10,19 @@ var express = require('express'),
     slug = require('slug'),
     moment = require('moment'),
     FB = require('fb'),
+    color   = require('dominant-color'),
     fbApp,
     client_id,
-    client_secret;
+    client_secret,
+    root_url;
 
 
 exports.test = function(next){
     return next("helpers");
+};
+
+exports.set_root_url = function(url){
+    root_url = url;
 };
 
 exports.init_fb = function(){
@@ -38,21 +44,7 @@ exports.set_total = function(){
 
 exports.init_timestamp = function(callback){
     var self = this;
-    /*var d = new Date();
-    //d.setHours ( d.getHours() - 3 );
-    d.setHours(0,0,0,0);
-
-    Options.findOneAndUpdate(
-        {'meta.key': 'first_post_timestamp'}, 
-        {'meta.value': Math.round(d/1000)}, 
-        {upsert: true, 'new': false}, 
-        function (err, options, raw) {
-        if (err) {
-            return console.log(err);
-        } 
-        callback()
-        //callback(err, {success:true});
-    });*/
+    
     Post
         .find()
         .limit(5)
@@ -64,8 +56,13 @@ exports.init_timestamp = function(callback){
                 return next(err);
             }
             var last = posts[0];
-            var time = new Date(last.updated_time);
-            var unix = Math.round(time/1000)
+            if(posts.length == 0){
+                var unix = "1513728000";
+            }else{
+                var time = new Date(last.updated_time);
+                var unix = Math.round(time/1000)
+            }
+            
       //return res.json(unix)
             self.updateOptions("last_post_timestamp", unix, function(____err,resp){
                 callback(unix)
@@ -108,23 +105,25 @@ exports.record = function(min, _res){
     async.each(_res.data,
         function(_post, callback){
             if(_post.link){
-                var query = {link: _post.link}
-                var update = {
-                    fbid: _post.id,
-                    type: _post.type,
-                    name: _post.name,
-                    message: _post.message,
-                    description: _post.description,
-                    updated_time: _post.updated_time,
-                    link: _post.link,
-                    from: _post.from.name
-                }
+                
                 //console.log("post updated_time : "+ _post.updated_time)
                 console.log(min, Math.round(+new Date(_post.updated_time)/1000))
                 if(min > Math.round(+new Date(_post.updated_time)/1000)){
                     _res.paging = null;
                     callback();
                 }else{
+                    var query = {link: _post.link}
+                    var update = {
+                        fbid: _post.id,
+                        type: _post.type,
+                        name: _post.name,
+                        message: _post.message,
+                        description: _post.description,
+                        updated_time: _post.updated_time,
+                        link: _post.link,
+                        from: _post.from.name
+                    }
+
                     Post.findOneAndUpdate(query, update, {upsert: true, 'new': true}, function (err, post, raw) {
                         var _slug = "";
                         if(post.name)
@@ -133,22 +132,43 @@ exports.record = function(min, _res){
                             _slug = Math.random().toString(36).substring(7);
     
                         var screenshot = "public/uploads/crazy-cool-websites-"+_slug+".png";
-                        webshot(post.link, screenshot, function(error) {
-
-                        //extract({ uri: post.link }, function (error, results) {
+                        //var _options = {renderDelay: }
+                        //webshot(post.link, screenshot, {renderDelay:2000}, function(error) {
+                        webshot(post.link, screenshot, {renderDelay: 2000}, function(error) {
+                            
                             if(!error){       
                                 
                                 screenshot = screenshot.replace("public/", "");
-
-                                var query = {_id: post._id}
-                                var update = {image: screenshot}
-                                console.log(screenshot);
                                 
-                                Post.findOneAndUpdate(query, update, {upsert: true, 'new': true}, function (err, post, raw) {
-                                    callback();
+                                var query = {_id: post._id}
+                                
+
+                                color(root_url+"/"+screenshot, function(err, color){
+                                    if(err){
+                                        console.log("color err",err)
+                                        var update = {image: screenshot}
+                                        Post.findOneAndUpdate(query, update, {upsert: true, 'new': true}, function (err, post, raw) {
+                                            callback();
+                                        });
+                                    }else{
+                                        //var query = {_id: post._id}
+                                        var update = {
+                                            image: screenshot,
+                                            color: color
+                                        }
+
+                                        console.log("- screenshot", screenshot);
+                                        console.log("- color",color);
+                                      
+                                        Post.findOneAndUpdate(query, update, {upsert: true, 'new': true}, function (err, post, raw) {
+                                            callback();
+                                        });
+                                    }
+                                
                                 });
 
                             }else{
+                                console.log(error)
                                 callback();
                             }
                         });
@@ -173,10 +193,10 @@ exports.record = function(min, _res){
                     console.log("statusCode",response.statusCode);
                     //console.log(body);
 
-                    self.record(first_post_timestamp, JSON.parse(body))
+                    self.record(min, JSON.parse(body))
                 }).setMaxListeners(0);
             }else{
-                console.log("done")
+                console.log("record done, paging empty")
                 self.set_total();
             }
         }

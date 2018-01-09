@@ -18,7 +18,8 @@ var PostSchema = new Schema({
     	type: Date, default: Date.now
   	},
   	from: String,
-    image: String
+    image: String,
+    color: String
 },{
     timestamps: true
 });

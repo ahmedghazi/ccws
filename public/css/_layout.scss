@@ -1,6 +1,18 @@
 body {
-  padding: $font3;
+  padding: $padding2;
   &.loading{
-  	ul{opacity: 0.5}
+  	opacity: 0.5;
+  	cursor: wait;
   }
+}
+
+section{
+	padding-top: 108px;
+}
+
+.about{
+	h2,
+	li{
+		margin-bottom: 1em;
+	}
 }

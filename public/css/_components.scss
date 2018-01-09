@@ -1,0 +1,22 @@
+@keyframes loader{
+	from{
+		transform: rotate(0deg);
+	}
+	to{
+		transform: rotate(360deg);
+	}
+}
+
+#loader{
+	position: fixed;
+	left: 50%; top: 50%;
+	transform: translate(-50%, -50%);
+	display:none;
+	&:hover{cursor: none;}
+	.is-exiting &{display: block}
+}
+
+#loader img{
+	animation: loader 1s linear infinite;
+}
+

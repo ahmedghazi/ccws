@@ -1,34 +1,4 @@
-@mixin sticky-footer($footer-height, $wrapper-selector: unquote("#wrapper"), $container-selector: unquote("#container"), $footer-selector: unquote("#footer")) {
-  html, body {
-    height: 100%;
-  }
-  body {
-    margin: 0px;
-    padding: 0px;
-  }
-  #{$wrapper-selector} {
-    min-height: 100%;
-    height: auto !important;
-    height: 100%;
-    margin-bottom: -$footer-height;
-    #{$container-selector} {
-      padding: 0 0 $footer-height 0;
-    } 
-  }
-  #{$footer-selector} {
-    height: $footer-height; 
-  }
-}
 
-@mixin clearfix {
-  &:after {
-    content: '';
-    display: table;
-    width: 100%;
-    height: 0.1px;
-    clear: both;
-  }
-}
 
 
 /************************************************************************
@@ -75,147 +45,13 @@ $all-text-inputs-hover: assign-inputs($inputs-list, hover);
 /* Focus Pseudo-class */
 $all-text-inputs-focus: assign-inputs($inputs-list, focus);
 
-@mixin _curent_color($color) {
-  $curent_color: $color !default;
-  @debug($current_color,$color);
-}
 
-/*
-.bleu .highlight{color:$bleu}
-.vert .highlight{color:$vert}
-.rouge .highlight{color:$rouge}
-.jaune .highlight{color:$jaune}
-*/
-@function set-color($class) {
-  @if ($class == bleu) {
-    @return $bleu;
-  } @else if ($class == vert) {
-    @return $vert;
-  } @else if ($class == rouge) {
-    @return $rouge;
-  } @else if ($class == jaune) {
-    @return $jaune;
-  } @else {
-    @return #000;
-  }
-}
-
-@mixin colorize(){
-  .bleu &,
-  .bleu & *{color:$bleu !important}
-
-  .vert &,
-  .vert & *{color:$vert !important}
-
-  .rouge &,
-  .rouge & *{color:$rouge !important}
-
-  .jaune &,
-  .jaune & *{color:$jaune !important}
-}
 @mixin gradient($start, $end){
   background: -moz-linear-gradient(top, $start 0%, $end 100%); /* FF3.6-15 */
   background: -webkit-linear-gradient(top, $start 0%, $end 100%); /* Chrome10-25,Safari5.1-6 */
   background: linear-gradient(to bottom, $start 0%, $end 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
 }
-
-@mixin menu_zuo(){
-  &:hover,
-  &:active,
-  &.current-menu-item{
-    /*font-family: $font-condensed;
-    font-size: $font-titraille;
-    line-height: 0.900em;*/
-    a{
-      color: inherit;
-      height: $font-titraille;
-      .nav-ext{
-        transform: translateY($font-titraille);
-        opacity: 0;
-      }
-      &:after{
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
-  }
-  
-  a{
-    position: relative;
-    font-family: $font-extended;
-    display: inline-block;
-    overflow: hidden;
-    @include anime();
-    height: 1.5vw;
-    .nav-ext{
-      @include anime();
-      transform: translateY(0);
-    }
-
-    &:after{
-      @include anime();
-      content: attr(title);
-      font-family: $font-condensed;
-      //font-size: $font-titraille;
-      //font-size: 4.25vw;
-      //font-size: 5.35vw;
-      font-size: $font-titraille-responsive;
-      line-height: 0.900em;
-      position: absolute;
-      left: 0;
-      top: 0;
-      transform: translateY(-$font-titraille);
-      width: 100%;
-      opacity: 0;
-      //text-align: center;
-    }
-
-  }
-}
-
-@mixin nav_agence_color(){
-  .bleu{
-     .tpl-agence .nav-agence li{
-      a{color: black;}
-      a:hover,
-      a.active{
-        color: $bleu!important;
-      }
-     }
-  }
-
-  .vert{
-     .tpl-agence .nav-agence li{
-      a{color: black;}
-      a:hover,
-      a.active{
-        color: $vert!important;
-      }
-     }
-  }
-
-  .jaune{
-     .tpl-agence .nav-agence li{
-      a{color: black;}
-      a:hover,
-      a.active{
-        color: $jaune!important;
-      }
-     }
-  }
-
-  .rouge{
-     .tpl-agence .nav-agence li{
-      a{color: black;}
-      a:hover,
-      a.active{
-        color: $rouge!important;
-      }
-     }
-  }
-}
-
 
 @mixin _placeholder {
   &::-webkit-input-placeholder {@content}

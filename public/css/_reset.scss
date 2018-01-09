@@ -121,6 +121,7 @@ nav,
 section,
 summary {
   display: block;
+  position: relative;
 }
 
 table {
@@ -239,4 +240,4 @@ textarea {
 /* 'alert' has a basic style, since it's useful to have it standing out for testing purposes. */
 
 /* SRCSET */
-img[data-sizes="auto"] { display: block; max-width: 100%; }
+img[data-sizes="auto"] { display: block; width: 100%; }

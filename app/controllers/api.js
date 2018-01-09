@@ -9,15 +9,18 @@ var express = require('express'),
   webshot = require('node-webshot'),
   slug = require('slug'),
   FB = require('fb'),
+  color   = require('dominant-color'),
   fbApp,
   client_id,
-  client_secret;
+  client_secret,
+  app;
 
-module.exports = function (app) {
+module.exports = function (_app) {
   client_id = '398286323958628';
   client_secret = '926f16496c7e71988cd8a827c9ea0ba0';
   fbApp = FB.extend({appId: client_id, appSecret: client_secret});
 
+  app = _app;
   app.use('/api', router);
 };
 
@@ -156,6 +159,7 @@ router.get('/posts', function (req, res, next) {
   helpers.collect(max, function(){
       console.log("collect callback")
   });*/
+  helpers.set_root_url(app.locals.root_url)
   helpers.init_timestamp(function(time){
       helpers.collect(time, function(){
           console.log("collect callback")
@@ -301,6 +305,39 @@ router.get('/image', function (req, res, next) {
     });
 });
 
+router.get('/color', function (req, res, next) {
+  Post
+    .find()
+    //.limit(req.params.limit)
+    .sort({updated_time: 'desc'})
+    .exec(function(err, posts) {
+      async.each(posts,
+        function(post, callback){
+          if(post.image){
+            color(app.locals.root_url+"/"+post.image, function(err, color){
+              if(err){
+                console.log("err",err)
+                callback();
+              }else{
+                var query = {_id: post._id}
+                var update = {color: color}
+                console.log("color",color);
+                
+                Post.findOneAndUpdate(query, update, {upsert: true, 'new': true}, function (err, post, raw) {
+                  callback();
+                });
+              }
+            });
+          }else{
+            callback();
+          }
+          
+        },
+        function(err){
+          res.send("done")
+        });
+    });
+});
 
 router.get('/drop', function (req, res, next) {
   req.resetDb();

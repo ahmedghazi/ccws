@@ -1,13 +1,14 @@
 extends layout
 
 block content
-    -var now = new Date();
-    h1 #{title} / 2013-#{now.getFullYear()} / (#{total_posts})
-    
-    ul
-        include liste
+    header
+        include header
         
+    section
+        .liste
+            include liste
+        .pagination.text-center
+            input(type='hidden' value='1' id='page')
+            a(href='#' class='btn more') Moar
 
-    div.pagination
-        input(type='hidden' value='1' id='page')
-        a(href='#' class='btn more') Moar
+    

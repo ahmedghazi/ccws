@@ -6,33 +6,32 @@ $max-width: 1800px;
 $footerheight: 50px;
 
 /* Colors */
-$bg: #e3e3e3;
-$text-color: blue;
-$links: black;
-$hover: black;
+$bg: #fff;
+$color: black;
+$links: blue;
+$hover: blue;
 
 /* Fonts */
-$main: sans-serif;
+$font: 'TH Grotesk SEMI ( CCWA )', monospace, sans-serif;
 
-$font1: 16px;
-$font1-ls: 0.020em;
+$font1: 18px;
+$font1-ls: 20px;
 
-$font2: 18px;
-$font2-ls: 0.025em;
-
-$font3: 24px;
-$font3-ls: 0.05em;
+$font2: 74px;
+$font2-ls: 66px;
 
 
 /* Borders */
 $border: 1px solid #000;
 
 /* PADDINGS */
-$padding1: 25px;
-$page-padding: 135px;
-$page-padding-full: 180px;
-$marge1: 20px;
-$marge2: 35px;
+$padding1: 10px;
+$padding2: 20px;
+$padding3: 40px;
+
+$marge1: 10px;
+$marge2: 20px;
+$marge3: 40px;
 
 $gutter: 0.5em;
 $mobile-gutter: 13px;

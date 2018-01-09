@@ -10,7 +10,17 @@ html(lang='en')
       if ENV_DEVELOPMENT
         script(src='http://localhost:35729/livereload.js')
   body
-    block content
+
+    #page
+    
+      block content
+    
+      #loader
+        img(src="img/loader.png")
 
     script(src='/js/jquery.min.js')
+    script(src='/js/_plugins.js')
+    script(src='/js/smooth-state.js')
+    script(src='/js/nav-controller.js')
+    script(src='/js/scroll-controller.js')
     script(src='/js/app.js')

@@ -1,26 +1,50 @@
-body {
-  padding: $font3;
-  font: $font3 'Roboto Mono', monospace, sans-serif;
-  color: blue;
-  
+@font-face {
+  	font-family: 'TH Grotesk SEMI ( CCWA )';
+    src: url('../fonts/THGroteskSEMICCWA-Regular.eot'); /* IE9 Compat Modes */
+    src: url('../fonts/THGroteskSEMICCWA-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('../fonts/THGroteskSEMICCWA-Regular.woff') format('woff'), /* Modern Browsers */
+         url('../fonts/THGroteskSEMICCWA-Regular.ttf')  format('truetype'), /* Safari, Android, iOS */
+         url('../fonts/THGroteskSEMICCWA-Regular.svg#743dae3a425d0d86c2689bf1bb1a2a57') format('svg'); /* Legacy iOS */
+  	font-style:   normal;
+  	font-weight:  400;
 }
 
-h1{
+
+
+body {
+	font: $font1 $font;
+	color: $color;
+}
+
+h1,
+h2{
 	margin: 0;
-	margin-bottom: 1em;
-	font-size: $font3;
-	text-transform: uppercase;
+	font-size: $font1;
 	font-weight: 400;
 }
+
 a {
-	color: $text-color;
+	color: $color;
 	text-decoration: none;
 	cursor: url(../img/cursor-pointer.png) 31 23,auto;
 	&:hover{color: #000}
 }
 
 .btn{
-	border: 3px solid;
-	padding: .3em 2em;
+	border: 2px solid;
 	display: inline-block;
+	width: 100px; height: 100px;
+	border-radius: 100%;
+	text-align: center;
+	line-height: 100px;
+	background-color: black;
+	color: white;
+	&:hover{
+		background-color: white;
+		color: black;
+	}
+}
+
+.title{
+	font-size: $font2;
 }

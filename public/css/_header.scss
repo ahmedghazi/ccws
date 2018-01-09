@@ -1,0 +1,59 @@
+header{
+	background-color: #f3f3f3;
+	position: fixed; left:0; top:0;
+	padding: $padding2;
+	width: 100vw;
+	z-index: 9999;
+	nav{
+		@include anime(.1s);
+	}
+	nav.menu{
+		li{
+			cursor: url(../img/cursor-pointer.png) 31 23,auto;
+			line-height: 1.2em;
+			min-height: $font1 + 1px;
+			font-size: $font1;
+			#s{
+				display: block;
+				background-color: transparent;
+				padding: 0; border: none;
+				line-height: 1.1em;
+				@include placeholder(black);
+			}
+
+			#contributors-toggle{
+				&:after{
+					content: "+";
+					display: inline-block;
+					margin-left: 0.4em;
+					vertical-align: middle;
+				}
+				&.active:after{content:"-"}
+			}
+		}
+	}
+	
+	nav.extra{
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		line-height: 1.2em;
+		//left: -190px;
+		& * {min-height: $font1 + 1px;}
+		.timestamps{
+			ul{
+				display: flex;
+				justify-content: space-between;
+				color: white;
+			}
+		}
+	}
+	&.affix{
+		nav{
+			position: absolute;
+			transform: translateY(-100%);
+			opacity: 0;
+		}
+	}
+}

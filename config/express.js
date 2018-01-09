@@ -7,6 +7,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var compress = require('compression');
 var methodOverride = require('method-override');
+var os              = require("os");
 var cron            = require('../app/lib/cron');
 
 module.exports = function(app, config) {
@@ -30,6 +31,12 @@ module.exports = function(app, config) {
 
   app.locals.moment = require('moment');
   
+  if(os.homedir() == "/Users/ahmedghazi"){
+      app.locals.root_url = "http://localhost:3005";
+  }else{
+      app.locals.root_url = "http://5.196.12.161:3005";
+  }
+
   var controllers = glob.sync(config.root + '/app/controllers/*.js');
   controllers.forEach(function (controller) {
     require(controller)(app);
@@ -70,5 +77,6 @@ console.log("cronStop")
       console.log("cron result: ",_result)
     });
   });
+  
   return app;
 };
