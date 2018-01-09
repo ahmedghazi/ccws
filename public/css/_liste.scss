@@ -8,7 +8,7 @@
 			display: inline-block;
 			vertical-align: top;
 			background: white;
-			height: 94px;
+			height: 79px;
 			position: relative;
 			width: auto;
 			.placeholder{
@@ -35,7 +35,7 @@
 		}
 		.title{
 			overflow-x: hidden;
-			position: relative; min-height: 70px;
+			position: relative; min-height: 67px;
 			//margin-bottom: $marge1;
 			
 			.autoradio{
@@ -73,17 +73,19 @@
 				
 			}
 			.url{color: blue!important}
+			
+		}
+		.col-left:hover + .col-right{
 			img{
 				position: fixed; 
 				top: 50%;
-				//top: calc(100vh - )
 				transform: translateY(-50%);
 				max-width: calc(50vw); 
 				height: auto;
 				z-index: 999;
+
 			}
 		}
-
 		
 	}
 	

@@ -146,19 +146,6 @@ router.get('/last', function (req, res, next) {
 });
 
 router.get('/posts', function (req, res, next) {
-  /*
-  helpers.init_timestamp();
-  
-  var d = new Date();
-  //d.setHours ( d.getHours() - 3 );
-  d.setHours(0,0,0,0);
-  var max = Math.round(d/1000);
-
-//    helpers.init_fb();
-  
-  helpers.collect(max, function(){
-      console.log("collect callback")
-  });*/
   helpers.set_root_url(app.locals.root_url)
   helpers.init_timestamp(function(time){
       helpers.collect(time, function(){
@@ -337,6 +324,77 @@ router.get('/color', function (req, res, next) {
           res.send("done")
         });
     });
+});
+
+router.get('/image-n-color/:id', function (req, res, next) {
+  Post
+    .findOne({_id: req.params.id})
+    .exec(function(err, post) {
+    if (err) {
+        console.log(err);
+        return next(err);
+    }
+    if(!post.color){
+      if(post.name)
+          _slug = slug(post.name).toLowerCase();
+      else 
+          _slug = Math.random().toString(36).substring(7);
+      
+      console.log("slug",_slug)
+
+      var screenshot = "public/uploads/crazy-cool-websites-"+_slug+".png";
+      console.log(app.locals.root_url+"/"+screenshot)
+      webshot(post.link, screenshot, {renderDelay: 2000}, function(error) {
+        if(!error){       
+      
+            screenshot = screenshot.replace("public/", "");
+      
+            var query = {_id: post._id}
+            color(app.locals.root_url+"/"+screenshot, function(err, color){
+                if(err){
+                    console.log("color err",err)
+                    var update = {image: screenshot}
+                    Post.findOneAndUpdate(query, update, {upsert: true, 'new': true}, function (err, post, raw) {
+                        return res.json(post)
+                    });
+                }else{
+                    var update = {
+                        image: screenshot,
+                        color: color
+                    }
+
+                    console.log("- screenshot", screenshot);
+                    console.log("- color",color);
+                  
+                    Post.findOneAndUpdate(query, update, {upsert: true, 'new': true}, function (err, post, raw) {
+                        return res.json(post)
+                    });
+                }
+            
+            });
+        }else{
+          console.log("webshot error",error)
+          return res.json(post)
+        }
+      });
+    }else{
+      return res.json(post)
+    }
+    /*
+    Options.findOneAndUpdate(
+        {'meta.key': 'first_post_timestamp'}, 
+        {'meta.value': unix}, 
+        {upsert: true, 'new': false}, 
+        function (err, options, raw) {
+        if (err) {
+            return console.log(err);
+        } 
+
+        //callback(err, {success:true});
+    });*/
+
+  });
+  
 });
 
 router.get('/drop', function (req, res, next) {

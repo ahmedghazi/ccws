@@ -1,11 +1,11 @@
 each post in posts
-    .item
+    .item(id="#{post._id}")
         a(href="#{post.link}" target="_blank")
             .row
                
                 if post.link && post.name
                     
-                    .col-xs-6
+                    .col-xs-6.col-left
                         div.title
                             div.autoradio
                                 span.name #{post.name}
@@ -17,7 +17,7 @@ each post in posts
                                     div POSTED #{moment(post.updated_time).format('MM.DD.YY HH:MM')}
                                 .col-xs-6
                                     div.url.text-right #{post.link}
-                    .col-xs-6
+                    .col-xs-6.col-right
                         .row.bottom-xs
                             .col-xs-6
                                 -var image = post.image
@@ -25,7 +25,7 @@ each post in posts
                                     figure
                                         if post.color
                                             div.placeholder(style="background-color:##{post.color}")
-                                        img(src="#{root_url}/#{image}" width="" height="94" onerror="this.className='img404'")
+                                        img(src="#{root_url}/#{image}" width="" height="76" onerror="this.className='img404'")
                             .col-xs-6
                                 div.from.text-right #{post.from}
 

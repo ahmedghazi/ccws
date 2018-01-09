@@ -432,13 +432,13 @@ img[data-sizes="auto"] {
   font-style: normal;
   font-weight: 400; }
 body {
-  font: 15px "TH Grotesk SEMI ( CCWA )", helvetica, monospace, sans-serif;
+  font: 13px "TH Grotesk SEMI ( CCWA )", helvetica, monospace, sans-serif;
   color: black; }
 
 h1,
 h2 {
   margin: 0;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 400; }
 
 a {
@@ -2566,7 +2566,7 @@ body {
     cursor: wait; }
 
 section {
-  padding-top: 108px; }
+  padding-top: 84px; }
 
 .about h2,
 .about li {
@@ -2579,14 +2579,15 @@ header {
   top: 0;
   padding: 20px;
   width: 100vw;
-  z-index: 9999; }
+  z-index: 99999;
+  transition: all 0.1s ease-in-out 0s; }
   header nav {
     transition: all 0.1s ease-in-out 0s; }
   header nav.menu li {
     cursor: url(../img/cursor-pointer.png) 31 23, auto;
     line-height: 1.2em;
-    min-height: 16px;
-    font-size: 15px; }
+    min-height: 14px;
+    font-size: 13px; }
     header nav.menu li #s {
       display: block;
       background-color: transparent;
@@ -2620,7 +2621,7 @@ header {
     justify-content: space-between;
     line-height: 1.2em; }
     header nav.extra * {
-      min-height: 16px; }
+      min-height: 14px; }
     header nav.extra .timestamps ul {
       display: flex;
       justify-content: space-between;
@@ -2639,7 +2640,7 @@ header {
       display: inline-block;
       vertical-align: top;
       background: white;
-      height: 94px;
+      height: 79px;
       position: relative;
       width: auto; }
       .liste .item figure .placeholder {
@@ -2662,7 +2663,7 @@ header {
     .liste .item .title {
       overflow-x: hidden;
       position: relative;
-      min-height: 70px; }
+      min-height: 67px; }
       .liste .item .title .autoradio {
         height: 100%;
         position: absolute;
@@ -2689,13 +2690,13 @@ header {
         animation: autoradio 5s linear infinite alternate; }
       .liste .item:hover .url {
         color: blue !important; }
-      .liste .item:hover img {
-        position: fixed;
-        top: 50%;
-        transform: translateY(-50%);
-        max-width: calc(50vw);
-        height: auto;
-        z-index: 999; }
+    .liste .item .col-left:hover + .col-right img {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      max-width: calc(50vw);
+      height: auto;
+      z-index: 999; }
 
 .more {
   margin-bottom: 40px; }
@@ -2708,4 +2709,5 @@ header {
 .contributors {
   margin-bottom: 40px; }
   .contributors .contributor {
-    font-size: 70px; }
+    font-size: 35px;
+    margin-bottom: 0.2em; }

@@ -3,7 +3,8 @@ header{
 	position: fixed; left:0; top:0;
 	padding: $padding2;
 	width: 100vw;
-	z-index: 9999;
+	z-index: 99999;
+	@include anime(.1s);
 	nav{
 		@include anime(.1s);
 	}
