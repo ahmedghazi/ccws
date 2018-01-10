@@ -199,6 +199,9 @@ router.get('/media/:id', function(req, res, next) {
                 console.log(err);
                 return next(err);
             }
+            console.log(post)
+            if (!post)return res.json(post)
+                
             if (post.name)
                 _slug = slug(post.name).toLowerCase();
             else
