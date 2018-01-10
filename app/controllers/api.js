@@ -205,6 +205,7 @@ router.get('/media/:id', function(req, res, next) {
                     _slug = slug(post.name).toLowerCase();
                 else
                     _slug = Math.random().toString(36).substring(7);
+                
                 var screenshot = "uploads/crazy-cool-websites-" + _slug + ".png";
                 webshot(post.link, "public/" + screenshot, {
                     renderDelay: 2000

@@ -233,15 +233,37 @@ exports.get_color = function(image, callback) {
             //throw err; // Fail if the file can't be read.
         }
         if (!data) callback("");
-
+/*
         var options = {
             method: 'POST',
             url: 'http://pictaculous.com/api/1.0/',
             form: {
                 image: data
             }
-        };
-        //console.log(options.url)
+        };*/
+        request.post('http://pictaculous.com/api/1.0/', {form:{image:data}}, function optionalCallback(err, httpResponse, body) {
+            if (err) {
+                return console.error('upload failed:', err);
+            }
+            console.log('Upload successful!  Server responded with:', body);
+            var palette = JSON.parse(body);
+            //console.log(palette)
+            var dominante = "";
+            if (palette.info) {
+                if (palette.info.colors && palette.info.colors.length) {
+                    if (palette.info.colors.length == 1) {
+                        dominante = palette.info.colors[0]
+                    } else if (palette.info.colors.length > 1) {
+                        dominante = palette.info.colors[palette.info.colors.length - 2]
+                    }
+                }
+            } else {
+                console.log(palette.info)
+            }
+
+            callback(dominante);
+        });
+        /*//console.log(options.url)
         request(options, function(error, response, body) {
             if (error) throw new Error(error);
 
@@ -261,6 +283,6 @@ exports.get_color = function(image, callback) {
             }
 
             callback(dominante);
-        });
+        });*/
     });
 };
