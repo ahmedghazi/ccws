@@ -50,84 +50,7 @@ router.get('/oauth', function(req, res, next) {
     });
 });
 
-router.get('/slug', function(req, res, next) {
-    Post
-        .find()
-        .sort({
-            updated_time: 'desc'
-        })
-        .limit(30)
-        .exec(function(err, posts) {
-            var _slug = "";
-            if (post.name)
-                _slug = slug(post.name);
-            else
-                _slug = Math.random().toString(36).substring(7);
 
-            console.log(post.name)
-            console.log(_slug)
-        });
-});
-
-router.get('/shot/:id', function(req, res, next) {
-    var postsPerPage = 10;
-    var skip = parseInt(req.params.id * postsPerPage);
-    Post
-        .find()
-        .sort({
-            updated_time: 'desc'
-        })
-        .limit(postsPerPage)
-        .skip(skip)
-        .exec(function(err, posts) {
-            //res.send("processing")
-            async.each(posts,
-                function(post, callback) {
-
-                    var _slug = "";
-                    if (post.name)
-                        _slug = slug(post.name).toLowerCase();
-                    else
-                        _slug = Math.random().toString(36).substring(7);
-
-                    //console.log(_slug)
-
-                    var screenshot = "public/uploads/crazy-cool-websites-" + _slug + ".png";
-
-                    webshot(post.link, screenshot, function(err) {
-                        if (!err) {
-
-                            screenshot = screenshot.replace("public/", "");
-
-                            var query = {
-                                _id: post._id
-                            }
-                            var update = {
-                                image: screenshot
-                            }
-                            console.log(screenshot);
-
-                            Post.findOneAndUpdate(query, update, {
-                                upsert: true,
-                                'new': true
-                            }, function(err, post, raw) {
-                                callback();
-                            });
-
-                        } else {
-                            console.log(err)
-                            callback();
-                        }
-
-                    });
-                },
-                function(err) {
-                    var nextPage = parseFloat(req.params.id) + 1;
-                    res.redirect("/api/shot/" + nextPage);
-                });
-        });
-    //});
-});
 
 router.get('/last', function(req, res, next) {
     Post
@@ -179,146 +102,23 @@ router.get('/count', function(req, res, next) {
     helpers.set_total();
 });
 
-router.get('/posts-all', function(req, res, next) {
-    FB.setAccessToken('398286323958628|IrwxIREQmoqa0x8G2zTIj7AmzP8');
-    FB.api('393558204075688/feed?limit=100&&fields=id,message,name,caption,description,updated_time,link,from,type', function(_res) {
-        if (!_res || _res.error) {
-            console.log(!_res ? 'error occurred' : _res.error);
-            return res.send(_res.error);
-        }
-
-        record(res, _res);
-    });
+router.get('/all', function (req, res, next) {
+    return Post
+        .find()
+        .sort({updated_time: 'desc'})
+        //.limit(postsPerPage)
+        .exec(function(err, posts) {
+            if (err) {
+                console.log(err);
+                return next(err);
+            }
+            //console.log(app.get('title'));
+            return res.json(posts);
+        });
 });
 
-/*
-function record(res, _res){
-  if(!_res || _res.error) {
-   console.log(!_res ? 'error occurred' : _res.error);
-   return res.send(_res.error);
-  }
-  console.log("length",_res.data.length)
 
-  async.each(_res.data,
-    function(_post, callback){
-      
-      //console.log(post)
-      if(_post.link){
-        var query = {link: _post.link}
-        var update = {
-            fbid: _post.id,
-            type: _post.type,
-            name: _post.name,
-            message: _post.message,
-            description: _post.description,
-            updated_time: _post.updated_time,
-            link: _post.link,
-            from: _post.from.name
-        }
-
-        Post.findOneAndUpdate(query, update, {upsert: true, 'new': true}, function (err, post, raw) {
-          //callback();
-          extract({ uri: post.link }, function (error, results) {
-            if(!error){              
-              var image = '';
-              if(results.ogImage)
-                image = results.ogImage;
-              else if(results.twitterImage){
-                image = results.twitterImage;
-              }
-
-              var query = {_id: post._id}
-              var update = {image: image}
-              console.log(image);
-           
-              Post.findOneAndUpdate(query, update, {upsert: true, 'new': true}, function (err, post, raw) {
-                callback();
-              });
-            
-            }else{
-              callback();
-            }
-            
-          });
-        });
-
-      }else{
-        callback();
-      }
-      
-    },
-    
-    function(err){
-      
-      if (_res.paging && _res.paging.next != "undefined"){
-        console.log("paging",_res.paging.next)
-        var options = { 
-            method: 'GET',
-            url: _res.paging.next,
-        };
-        
-        request(options, function (error, response, body) {
-            if (error) throw new Error(error);
-
-            console.log("statusCode",response.statusCode);
-            //console.log(body);
-
-            record(res, JSON.parse(body))
-        }).setMaxListeners(0);
-
-      }else{
-        //res.redirect("/posts")
-        res.send("done")
-      }
-    }
-  );
-}
-*/
-/*
-router.get('/image', function (req, res, next) {
-  Post
-    .find()
-    .sort({updated_time: 'desc'})
-    //.limit(10)
-    .exec(function(err, posts) {
-      async.each(posts,
-        function(post, callback){
-          if(!post.image)callback();
-
-          if(post.name)
-              _slug = slug(post.name).toLowerCase();
-          else 
-              _slug = Math.random().toString(36).substring(7);
-          
-          var screenshot = "public/uploads/crazy-cool-websites-"+_slug+".png";
-          //var _options = {renderDelay: }
-          //webshot(post.link, screenshot, {renderDelay:2000}, function(error) {
-          webshot(post.link, screenshot, {renderDelay: 2000}, function(error) {
-            self.get_color(screenshot, function(color){
-                
-                screenshot = screenshot.replace("public/", "");
-                var query = {_id: post._id}
-                var update = {
-                    image: screenshot,
-                    color: color
-                }
-
-                console.log("- screenshot", screenshot);
-                console.log("- color",color);
-                
-                Post.findOneAndUpdate(query, update, {upsert: true, 'new': true}, function (err, post, raw) {
-                    callback();
-                });
-            });
-          });
-        },
-        function(err){
-          return res.send("done")
-        });
-    });
-});*/
-
-router.get('/color', function(req, res, next) {
+router.get('/media', function(req, res, next) {
     Post
         .find()
         //.limit(2)
@@ -389,7 +189,7 @@ router.get('/color', function(req, res, next) {
         });
 });
 
-router.get('/image-n-color/:id', function(req, res, next) {
+router.get('/media/:id', function(req, res, next) {
     Post
         .findOne({
             _id: req.params.id
@@ -399,84 +199,58 @@ router.get('/image-n-color/:id', function(req, res, next) {
                 console.log(err);
                 return next(err);
             }
-            if (!post.color) {
+            if (!post.image || post.image.indexOf("crazy-cool-websites") == -1) {
+                console.log("has no image")
                 if (post.name)
                     _slug = slug(post.name).toLowerCase();
                 else
                     _slug = Math.random().toString(36).substring(7);
-
-                console.log("slug", _slug)
-
-                var screenshot = "public/uploads/crazy-cool-websites-" + _slug + ".png";
-                console.log(app.locals.root_url + "/" + screenshot)
-                webshot(post.link, screenshot, {
+                var screenshot = "uploads/crazy-cool-websites-" + _slug + ".png";
+                webshot(post.link, "public/" + screenshot, {
                     renderDelay: 2000
                 }, function(error) {
-                    if (!error) {
+                    
+                    helpers.get_color("public/" + screenshot, function(color) {
+                        console.log("- screenshot", screenshot);
+                        console.log("- color", color);
 
-                        helpers.get_color(screenshot, function(color) {
-                            screenshot = screenshot.replace("public/", "");
-                            var query = {
-                                _id: post._id
-                            }
-                            var update = {
-                                image: screenshot,
-                                color: color
-                            }
+                        var query = {
+                            _id: post._id
+                        }
+                        var update = {
+                            image: screenshot,
+                            color: color
+                        }
 
-                            console.log("- screenshot", screenshot);
-                            console.log("- color", color);
-
-                            Post.findOneAndUpdate(query, update, {
-                                upsert: true,
-                                'new': true
-                            }, function(err, post, raw) {
-                                return res.json(post)
-                            });
-                        })
-
-                        /*color(app.locals.root_url+"/"+screenshot, function(err, color){
-                            if(err){
-                                console.log("color err",err)
-                                var update = {image: screenshot}
-                                Post.findOneAndUpdate(query, update, {upsert: true, 'new': true}, function (err, post, raw) {
-                                    return res.json(post)
-                                });
-                            }else{
-                                var update = {
-                                    image: screenshot,
-                                    color: color
-                                }
-
-                                console.log("- screenshot", screenshot);
-                                console.log("- color",color);
-                              
-                                Post.findOneAndUpdate(query, update, {upsert: true, 'new': true}, function (err, post, raw) {
-                                    return res.json(post)
-                                });
-                            }
-            
-                        });*/
-                    } else {
-                        console.log("webshot error", error)
-                        return res.json(post)
-                    }
+                        Post.findOneAndUpdate(query, update, {
+                            upsert: true,
+                            'new': true
+                        }, function(err, post, raw) {
+                            return res.json(post)
+                        });
+                    });
                 });
-            } else {
-                return res.json(post)
-            }
-            /*
-            Options.findOneAndUpdate(
-                {'meta.key': 'first_post_timestamp'}, 
-                {'meta.value': unix}, 
-                {upsert: true, 'new': false}, 
-                function (err, options, raw) {
-                if (err) {
-                    return console.log(err);
-                } 
+            }else{
+                console.log("has image", post.image)
+                helpers.get_color("public/" + post.image, function(color) {
+                    console.log("- screenshot", post.image);
+                    console.log("- color", color);
 
-                //callback(err, {success:true});
-            });*/
+                    var query = {
+                        _id: post._id
+                    }
+                    var update = {
+                        color: color
+                    }
+
+                    Post.findOneAndUpdate(query, update, {
+                        upsert: true,
+                        'new': true
+                    }, function(err, post, raw) {
+                        return res.json(post)
+                    });
+                });
+            }
 
         });
 
