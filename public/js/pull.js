@@ -10,7 +10,7 @@ var pull = (function () {
               url: '/api/all'
             })
             .done(function( data ) {
-                //console.log(data)
+                console.log(data)
                 pull(data);
                 for(var i in data[i]){
 
@@ -31,8 +31,8 @@ var pull = (function () {
             if(c < data.length){
                 pull(data);
                 var html = $("#result").html();
-                html += "<div>"+res.name+" : "+res.image+" - "+res.color+"</div>";
-                $("#result").html(html)
+                if(res)html += "<div>"+res.name+" : "+res.image+" - "+res.color+"</div>";
+                if(res)$("#result").html(html)
             }else{
                 var html = $("#result").html();
                 html += "<div>done !!</div>";
