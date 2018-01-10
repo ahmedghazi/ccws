@@ -231,7 +231,7 @@ router.get('/media/:id', function(req, res, next) {
             
             var screenshot = "uploads/crazy-cool-websites-" + _slug + ".png";
             webshot(post.link, "public/" + screenshot, {
-                renderDelay: 2000
+                renderDelay: 1000
             }, function(error) {
                 
                 helpers.get_color("public/" + screenshot, function(color) {
