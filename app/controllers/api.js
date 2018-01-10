@@ -204,7 +204,7 @@ router.get('/media/:id', function(req, res, next) {
             //console.log(post)
             if (!post)return res.json(post)
             if (post.name == "tig.ht")return res.json(post)
-            if (!post.color || post.color != "")return res.json(post);
+            if (post.color && post.color != "")return res.json(post);
 
             if (post.name)
                 _slug = slug(post.name).toLowerCase();
