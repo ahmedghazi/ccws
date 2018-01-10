@@ -3,6 +3,7 @@ var express = require('express'),
   mongoose = require('mongoose'),
   Post = mongoose.model('Post'),
   request = require('request'),
+  //fs = require("fs"),
   async = require('async'),
   extract = require('meta-extractor'),
   helpers = require('../lib/helpers'),
@@ -262,32 +263,37 @@ router.get('/image', function (req, res, next) {
     .exec(function(err, posts) {
       async.each(posts,
         function(post, callback){
-          extract({ uri: post.link }, function (error, results) {
-          
-            if(!error){              
-              var image = '';
-              if(results.ogImage)
-                image = results.ogImage;
-              else if(results.twitterImage){
-                image = results.twitterImage;
-              }
+          if(!post.image)callback();
 
-              var query = {_id: post._id}
-              var update = {image: image}
-              console.log(image);
-           
-              Post.findOneAndUpdate(query, update, {upsert: true, 'new': true}, function (err, post, raw) {
-                callback();
-              });
-            
-            }else{
-              callback();
-            }
-            
+          if(post.name)
+              _slug = slug(post.name).toLowerCase();
+          else 
+              _slug = Math.random().toString(36).substring(7);
+          
+          var screenshot = "public/uploads/crazy-cool-websites-"+_slug+".png";
+          //var _options = {renderDelay: }
+          //webshot(post.link, screenshot, {renderDelay:2000}, function(error) {
+          webshot(post.link, screenshot, {renderDelay: 2000}, function(error) {
+            self.get_color(screenshot, function(color){
+                
+                screenshot = screenshot.replace("public/", "");
+                var query = {_id: post._id}
+                var update = {
+                    image: screenshot,
+                    color: color
+                }
+
+                console.log("- screenshot", screenshot);
+                console.log("- color",color);
+                
+                Post.findOneAndUpdate(query, update, {upsert: true, 'new': true}, function (err, post, raw) {
+                    callback();
+                });
+            });
           });
         },
         function(err){
-          res.send("done")
+          return res.send("done")
         });
     });
 });
@@ -295,28 +301,51 @@ router.get('/image', function (req, res, next) {
 router.get('/color', function (req, res, next) {
   Post
     .find()
-    //.limit(req.params.limit)
+    //.limit(5)
     .sort({updated_time: 'desc'})
     .exec(function(err, posts) {
       async.each(posts,
         function(post, callback){
           if(post.image){
-            color(app.locals.root_url+"/"+post.image, function(err, color){
-              if(err){
-                console.log("err",err)
-                callback();
-              }else{
-                var query = {_id: post._id}
-                var update = {color: color}
-                console.log("color",color);
-                
-                Post.findOneAndUpdate(query, update, {upsert: true, 'new': true}, function (err, post, raw) {
-                  callback();
-                });
-              }
-            });
+            helpers.get_color("public/"+post.image, function(color){
+              
+              var query = {_id: post._id}
+              var update = {color: color}
+
+              console.log("- screenshot", post.image);
+              console.log("- color",color);
+              
+              Post.findOneAndUpdate(query, update, {upsert: true, 'new': true}, function (err, post, raw) {
+                  callback()
+              });
+            })
           }else{
-            callback();
+            if(post.name)
+                _slug = slug(post.name).toLowerCase();
+            else 
+                _slug = Math.random().toString(36).substring(7);
+            
+            var screenshot = "public/uploads/crazy-cool-websites-"+_slug+".png";
+            //var _options = {renderDelay: }
+            //webshot(post.link, screenshot, {renderDelay:2000}, function(error) {
+            webshot(post.link, screenshot, {renderDelay: 2000}, function(error) {
+              helpers.get_color(screenshot, function(color){
+                  
+                  screenshot = screenshot.replace("public/", "");
+                  var query = {_id: post._id}
+                  var update = {
+                      image: screenshot,
+                      color: color
+                  }
+
+                  console.log("- screenshot", screenshot);
+                  console.log("- color",color);
+                  
+                  Post.findOneAndUpdate(query, update, {upsert: true, 'new': true}, function (err, post, raw) {
+                      callback();
+                  });
+              });
+            });
           }
           
         },
@@ -347,10 +376,23 @@ router.get('/image-n-color/:id', function (req, res, next) {
       webshot(post.link, screenshot, {renderDelay: 2000}, function(error) {
         if(!error){       
       
-            screenshot = screenshot.replace("public/", "");
-      
-            var query = {_id: post._id}
-            color(app.locals.root_url+"/"+screenshot, function(err, color){
+            helpers.get_color(screenshot, function(color){
+              screenshot = screenshot.replace("public/", "");
+              var query = {_id: post._id}
+              var update = {
+                  image: screenshot,
+                  color: color
+              }
+
+              console.log("- screenshot", screenshot);
+              console.log("- color",color);
+              
+              Post.findOneAndUpdate(query, update, {upsert: true, 'new': true}, function (err, post, raw) {
+                  return res.json(post)
+              });
+            })
+
+            /*color(app.locals.root_url+"/"+screenshot, function(err, color){
                 if(err){
                     console.log("color err",err)
                     var update = {image: screenshot}
@@ -371,7 +413,7 @@ router.get('/image-n-color/:id', function (req, res, next) {
                     });
                 }
             
-            });
+            });*/
         }else{
           console.log("webshot error",error)
           return res.json(post)
@@ -395,6 +437,21 @@ router.get('/image-n-color/:id', function (req, res, next) {
 
   });
   
+});
+
+router.get('/t', function (req, res, next) {
+
+  var file = 'public/uploads/crazy-cool-websites-dj-marcelleanother-nice-mess.png';
+  var url = app.locals.root_url+'/'+file;
+  
+  helpers.get_color(file, function(color){
+    return res.send(color)
+  })
+  
+  
+  //var u = "https://cdn.techterms.com/img/lg/binary_14.jpg";
+  
+
 });
 
 router.get('/drop', function (req, res, next) {

@@ -4,6 +4,37 @@
 		margin-bottom: $marge2;
 		cursor: url(../img/cursor-pointer.png) 31 23,auto;
 
+		
+		.title{
+			overflow-x: hidden;
+			position: relative; min-height: 60px;
+			//margin-bottom: $marge1;
+			
+			.autoradio{
+				height: 100%;
+				position: absolute;
+				white-space:nowrap;
+				text-overflow: ellipsis;
+				width: 100%;
+				overflow: hidden;
+				//transform: translate(-50%, 0);
+				display: flex;
+				span{
+					//display: inline-block;
+					flex-shrink: 0;
+					//&.name{margin-right: 0.5em}
+				}
+			}
+		}
+
+		.url{
+			white-space:nowrap;
+			text-overflow: ellipsis;
+			width: 100%;
+			overflow: hidden;
+			color: #9f9f9f;
+		}
+	
 		figure{
 			display: inline-block;
 			vertical-align: top;
@@ -33,35 +64,6 @@
 				
 			}
 		}
-		.title{
-			overflow-x: hidden;
-			position: relative; min-height: 67px;
-			//margin-bottom: $marge1;
-			
-			.autoradio{
-				height: 100%;
-				position: absolute;
-				white-space:nowrap;
-				text-overflow: ellipsis;
-				width: 100%;
-				overflow: hidden;
-				//transform: translate(-50%, 0);
-				display: flex;
-				span{
-					//display: inline-block;
-					flex-shrink: 0;
-					&.name{margin-right: 0.5em}
-				}
-			}
-		}
-
-		.url{
-			white-space:nowrap;
-			text-overflow: ellipsis;
-			width: 100%;
-			overflow: hidden;
-		}
-	
 		
 		&:hover{
 			z-index: 9999;

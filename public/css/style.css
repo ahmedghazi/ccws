@@ -463,7 +463,7 @@ a {
     color: black; }
 
 .title {
-  font-size: 70px; }
+  font-size: 60px; }
 
 /* =COMPONENTS
 ------------------ */
@@ -2559,18 +2559,24 @@ a {
 
   .last-lg {
     order: 1; } }
-body {
-  padding: 20px; }
-  body.loading {
-    opacity: 0.5;
-    cursor: wait; }
+body.loading {
+  opacity: 0.5;
+  cursor: wait; }
 
 section {
-  padding-top: 84px; }
+  padding: 20px;
+  padding-top: 104px;
+  min-height: 100vh; }
 
-.about h2,
-.about li {
+.about h2 {
+  font-size: 60px;
+  margin-bottom: 10px; }
+.about p {
+  font-size: 60px;
+  line-height: 1.2em;
   margin-bottom: 1em; }
+  .about p a {
+    color: blue; }
 
 header {
   background-color: #f3f3f3;
@@ -2636,6 +2642,26 @@ header {
   .liste .item {
     margin-bottom: 20px;
     cursor: url(../img/cursor-pointer.png) 31 23, auto; }
+    .liste .item .title {
+      overflow-x: hidden;
+      position: relative;
+      min-height: 60px; }
+      .liste .item .title .autoradio {
+        height: 100%;
+        position: absolute;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        width: 100%;
+        overflow: hidden;
+        display: flex; }
+        .liste .item .title .autoradio span {
+          flex-shrink: 0; }
+    .liste .item .url {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      width: 100%;
+      overflow: hidden;
+      color: #9f9f9f; }
     .liste .item figure {
       display: inline-block;
       vertical-align: top;
@@ -2660,27 +2686,6 @@ header {
         vertical-align: top; }
         .liste .item figure img.img404 {
           display: none; }
-    .liste .item .title {
-      overflow-x: hidden;
-      position: relative;
-      min-height: 67px; }
-      .liste .item .title .autoradio {
-        height: 100%;
-        position: absolute;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        width: 100%;
-        overflow: hidden;
-        display: flex; }
-        .liste .item .title .autoradio span {
-          flex-shrink: 0; }
-          .liste .item .title .autoradio span.name {
-            margin-right: 0.5em; }
-    .liste .item .url {
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      width: 100%;
-      overflow: hidden; }
     .liste .item:hover {
       z-index: 9999; }
       .liste .item:hover .autoradio.can {

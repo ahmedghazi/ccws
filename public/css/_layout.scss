@@ -1,5 +1,5 @@
 body {
-  padding: $padding2;
+  //padding: $padding2;
   &.loading{
   	opacity: 0.5;
   	cursor: wait;
@@ -7,12 +7,21 @@ body {
 }
 
 section{
-	padding-top: 84px;
+	padding: $padding2;
+	padding-top: 84px + $padding2;
+	min-height: 100vh;
 }
 
 .about{
-	h2,
-	li{
+	h2{
+		font-size: $font3;
+		margin-bottom: $marge1;
+	}
+	
+	p{
+		font-size: $font3;
+		line-height: 1.2em;
 		margin-bottom: 1em;
+		a{color: blue;}
 	}
 }

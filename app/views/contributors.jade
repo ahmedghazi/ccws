@@ -4,11 +4,11 @@ block content
     header
         include header
         
-    section
-        .contributors
-            each user in contributors
-                .contributor
-                    a(href="/search/#{user}") #{user}
+    section.contributors
+        
+        each user in contributors
+            .contributor
+                a(href="/search/#{user}") #{user}
         
 
     

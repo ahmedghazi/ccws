@@ -5,6 +5,7 @@ var express = require('express'),
     Options = mongoose.model('Options'),
     Post = mongoose.model('Post'),
     request = require('request'),
+    fs = require("fs"),
     //extract = require('meta-extractor'),
     webshot = require('node-webshot'),
     slug = require('slug'),
@@ -138,12 +139,26 @@ exports.record = function(min, _res){
                             
                             if(!error){       
                                 
-                                screenshot = screenshot.replace("public/", "");
                                 
-                                var query = {_id: post._id}
                                 
+                                self.get_color(screenshot, function(color){
+                                    
+                                    screenshot = screenshot.replace("public/", "");
+                                    var query = {_id: post._id}
+                                    var update = {
+                                        image: screenshot,
+                                        color: color
+                                    }
 
-                                color(root_url+"/"+screenshot, function(err, color){
+                                    console.log("- screenshot", screenshot);
+                                    console.log("- color",color);
+                                    
+                                    Post.findOneAndUpdate(query, update, {upsert: true, 'new': true}, function (err, post, raw) {
+                                        callback();
+                                    });
+                                });
+
+                                /*color(root_url+"/"+screenshot, function(err, color){
                                     if(err){
                                         console.log("color err",err)
                                         var update = {image: screenshot}
@@ -165,7 +180,7 @@ exports.record = function(min, _res){
                                         });
                                     }
                                 
-                                });
+                                });*/
 
                             }else{
                                 console.log(error)
@@ -217,4 +232,36 @@ exports.updateOptions = function(key,value,callback){
     });
 };
 
+exports.get_color = function(image, callback){
+    fs.readFile(image, function(err, data) {
+        if (err) {
+            callback("");
+            //throw err; // Fail if the file can't be read.
+        }
+        var options = { 
+            method: 'POST',
+            url: 'http://pictaculous.com/api/1.0/',
+            formData: {image: data} 
+        };
+
+        request(options, function (error, response, body) {
+            if (error) throw new Error(error);
+
+            var palette = JSON.parse(body);
+            //console.log(palette)
+            var dominante = "";
+            if(palette.info.colors.length){
+                if(palette.info.colors.length == 1){
+                    dominante = palette.info.colors[0]
+                }else if(palette.info.colors.length > 1){
+                    dominante = palette.info.colors[palette.info.colors.length - 2]
+                }
+            }else{
+                console.log(palette)
+            }
+
+            callback(dominante);
+        });
+    });
+};
 
