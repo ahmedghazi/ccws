@@ -1,177 +1,197 @@
 var express = require('express'),
-  router = express.Router(),
-  mongoose = require('mongoose'),
-  Post = mongoose.model('Post'),
-  request = require('request'),
-  //fs = require("fs"),
-  async = require('async'),
-  extract = require('meta-extractor'),
-  helpers = require('../lib/helpers'),
-  webshot = require('node-webshot'),
-  slug = require('slug'),
-  FB = require('fb'),
-  color   = require('dominant-color'),
-  fbApp,
-  client_id,
-  client_secret,
-  app;
+    router = express.Router(),
+    mongoose = require('mongoose'),
+    Post = mongoose.model('Post'),
+    request = require('request'),
+    //fs = require("fs"),
+    async = require('async'),
+    extract = require('meta-extractor'),
+    helpers = require('../lib/helpers'),
+    webshot = require('node-webshot'),
+    slug = require('slug'),
+    FB = require('fb'),
+    color = require('dominant-color'),
+    fbApp,
+    client_id,
+    client_secret,
+    app;
 
-module.exports = function (_app) {
-  client_id = '398286323958628';
-  client_secret = '926f16496c7e71988cd8a827c9ea0ba0';
-  fbApp = FB.extend({appId: client_id, appSecret: client_secret});
+module.exports = function(_app) {
+    client_id = '398286323958628';
+    client_secret = '926f16496c7e71988cd8a827c9ea0ba0';
+    fbApp = FB.extend({
+        appId: client_id,
+        appSecret: client_secret
+    });
 
-  app = _app;
-  app.use('/api', router);
+    app = _app;
+    app.use('/api', router);
 };
 
-router.get('/', function (req, res, next) {
-  res.send("api")
+router.get('/', function(req, res, next) {
+    res.send("api")
 });
 
-router.get('/oauth', function (req, res, next) {
-  FB.api('oauth/access_token', {
-      client_id: client_id,
-      client_secret: client_secret,
-      grant_type: 'client_credentials'
-  }, function (_res) {
-      if(!_res || _res.error) {
-          console.log(!_res ? 'error occurred' : _res.error);
-          return;
-      }
+router.get('/oauth', function(req, res, next) {
+    FB.api('oauth/access_token', {
+        client_id: client_id,
+        client_secret: client_secret,
+        grant_type: 'client_credentials'
+    }, function(_res) {
+        if (!_res || _res.error) {
+            console.log(!_res ? 'error occurred' : _res.error);
+            return;
+        }
 
-      var accessToken = _res.access_token;
-      console.log(accessToken)
-      //398286323958628|IrwxIREQmoqa0x8G2zTIj7AmzP8
-      return res.send(accessToken)
-  });
-});
-
-router.get('/slug', function (req, res, next) {
-  Post
-    .find()
-    .sort({updated_time: 'desc'})
-    .limit(30)
-    .exec(function(err, posts) {
-      var _slug = "";
-      if(post.name)
-          _slug = slug(post.name);
-      else 
-          _slug = Math.random().toString(36).substring(7);
-
-      console.log(post.name)
-      console.log(_slug)
+        var accessToken = _res.access_token;
+        console.log(accessToken)
+        //398286323958628|IrwxIREQmoqa0x8G2zTIj7AmzP8
+        return res.send(accessToken)
     });
 });
 
-router.get('/shot/:id', function (req, res, next) {
-  var postsPerPage = 10;
-  var skip = parseInt(req.params.id * postsPerPage);
+router.get('/slug', function(req, res, next) {
     Post
-      .find()
-      .sort({updated_time: 'desc'})
-      .limit(postsPerPage)
-      .skip(skip)
-      .exec(function(err, posts) {
-        //res.send("processing")
-        async.each(posts,
-          function(post, callback){
-            
+        .find()
+        .sort({
+            updated_time: 'desc'
+        })
+        .limit(30)
+        .exec(function(err, posts) {
             var _slug = "";
-            if(post.name)
-                _slug = slug(post.name).toLowerCase();
-            else 
+            if (post.name)
+                _slug = slug(post.name);
+            else
                 _slug = Math.random().toString(36).substring(7);
-            
-            //console.log(_slug)
 
-            var screenshot = "public/uploads/crazy-cool-websites-"+_slug+".png";
-            
-            webshot(post.link, screenshot, function(err) {
-              if(!err){
-            
-                screenshot = screenshot.replace("public/", "");
-            
-                var query = {_id: post._id}
-                var update = {image: screenshot}
-                console.log(screenshot);
-             
-                Post.findOneAndUpdate(query, update, {upsert: true, 'new': true}, function (err, post, raw) {
-                  callback();
+            console.log(post.name)
+            console.log(_slug)
+        });
+});
+
+router.get('/shot/:id', function(req, res, next) {
+    var postsPerPage = 10;
+    var skip = parseInt(req.params.id * postsPerPage);
+    Post
+        .find()
+        .sort({
+            updated_time: 'desc'
+        })
+        .limit(postsPerPage)
+        .skip(skip)
+        .exec(function(err, posts) {
+            //res.send("processing")
+            async.each(posts,
+                function(post, callback) {
+
+                    var _slug = "";
+                    if (post.name)
+                        _slug = slug(post.name).toLowerCase();
+                    else
+                        _slug = Math.random().toString(36).substring(7);
+
+                    //console.log(_slug)
+
+                    var screenshot = "public/uploads/crazy-cool-websites-" + _slug + ".png";
+
+                    webshot(post.link, screenshot, function(err) {
+                        if (!err) {
+
+                            screenshot = screenshot.replace("public/", "");
+
+                            var query = {
+                                _id: post._id
+                            }
+                            var update = {
+                                image: screenshot
+                            }
+                            console.log(screenshot);
+
+                            Post.findOneAndUpdate(query, update, {
+                                upsert: true,
+                                'new': true
+                            }, function(err, post, raw) {
+                                callback();
+                            });
+
+                        } else {
+                            console.log(err)
+                            callback();
+                        }
+
+                    });
+                },
+                function(err) {
+                    var nextPage = parseFloat(req.params.id) + 1;
+                    res.redirect("/api/shot/" + nextPage);
                 });
-              
-              }else{
-                console.log(err)
-                callback();
-              }
-              
-            });
-          },
-          function(err){
-            var nextPage = parseFloat(req.params.id) + 1;
-            res.redirect("/api/shot/"+nextPage);
-          });
-      });
-  //});
+        });
+    //});
 });
 
-router.get('/last', function (req, res, next) {
-  Post
-    .find()
-    .limit(10)
-    .sort({"updated_time": -1})
-    //.limit(postsPerPage)
-    .exec(function(err, posts) {
-    if (err) {
-        console.log(err);
-        return next(err);
-    }
-    var last = posts[0];
-    var time = new Date(last.updated_time);
-    var unix = Math.round(time/1000)
-    //return res.json(unix)
-    Options.findOneAndUpdate(
-        {'meta.key': 'first_post_timestamp'}, 
-        {'meta.value': unix}, 
-        {upsert: true, 'new': false}, 
-        function (err, options, raw) {
-        if (err) {
-            return console.log(err);
-        } 
+router.get('/last', function(req, res, next) {
+    Post
+        .find()
+        .limit(10)
+        .sort({
+            "updated_time": -1
+        })
+        //.limit(postsPerPage)
+        .exec(function(err, posts) {
+            if (err) {
+                console.log(err);
+                return next(err);
+            }
+            var last = posts[0];
+            var time = new Date(last.updated_time);
+            var unix = Math.round(time / 1000)
+            //return res.json(unix)
+            Options.findOneAndUpdate({
+                    'meta.key': 'first_post_timestamp'
+                }, {
+                    'meta.value': unix
+                }, {
+                    upsert: true,
+                    'new': false
+                },
+                function(err, options, raw) {
+                    if (err) {
+                        return console.log(err);
+                    }
 
-        //callback(err, {success:true});
+                    //callback(err, {success:true});
+                });
+
+        });
+
+});
+
+router.get('/posts', function(req, res, next) {
+    helpers.set_root_url(app.locals.root_url)
+    helpers.init_timestamp(function(time) {
+        helpers.collect(time, function() {
+            console.log("collect callback")
+        });
     });
-
-  });
-  
 });
 
-router.get('/posts', function (req, res, next) {
-  helpers.set_root_url(app.locals.root_url)
-  helpers.init_timestamp(function(time){
-      helpers.collect(time, function(){
-          console.log("collect callback")
-      });
-  });
+router.get('/count', function(req, res, next) {
+    helpers.set_total();
 });
 
-router.get('/count', function (req, res, next) {
-  helpers.set_total();
+router.get('/posts-all', function(req, res, next) {
+    FB.setAccessToken('398286323958628|IrwxIREQmoqa0x8G2zTIj7AmzP8');
+    FB.api('393558204075688/feed?limit=100&&fields=id,message,name,caption,description,updated_time,link,from,type', function(_res) {
+        if (!_res || _res.error) {
+            console.log(!_res ? 'error occurred' : _res.error);
+            return res.send(_res.error);
+        }
+
+        record(res, _res);
+    });
 });
 
-router.get('/posts-all', function (req, res, next) {
-  FB.setAccessToken('398286323958628|IrwxIREQmoqa0x8G2zTIj7AmzP8');
-  FB.api('393558204075688/feed?limit=100&&fields=id,message,name,caption,description,updated_time,link,from,type', function (_res) {
-    if(!_res || _res.error) {
-     console.log(!_res ? 'error occurred' : _res.error);
-     return res.send(_res.error);
-    }
-    
-    record(res, _res);
-  });
-});
-
-
+/*
 function record(res, _res){
   if(!_res || _res.error) {
    console.log(!_res ? 'error occurred' : _res.error);
@@ -253,8 +273,8 @@ function record(res, _res){
     }
   );
 }
-
-
+*/
+/*
 router.get('/image', function (req, res, next) {
   Post
     .find()
@@ -296,165 +316,199 @@ router.get('/image', function (req, res, next) {
           return res.send("done")
         });
     });
-});
+});*/
 
-router.get('/color', function (req, res, next) {
-  Post
-    .find()
-    //.limit(5)
-    .sort({updated_time: 'desc'})
-    .exec(function(err, posts) {
-      async.each(posts,
-        function(post, callback){
-          if(post.image){
-            helpers.get_color("public/"+post.image, function(color){
-              
-              var query = {_id: post._id}
-              var update = {color: color}
+router.get('/color', function(req, res, next) {
+    Post
+        .find()
+        //.limit(2)
+        .sort({
+            updated_time: 'desc'
+        })
+        .exec(function(err, posts) {
 
-              console.log("- screenshot", post.image);
-              console.log("- color",color);
-              
-              Post.findOneAndUpdate(query, update, {upsert: true, 'new': true}, function (err, post, raw) {
-                  callback()
-              });
-            })
-          }else{
-            if(post.name)
-                _slug = slug(post.name).toLowerCase();
-            else 
-                _slug = Math.random().toString(36).substring(7);
-            
-            var screenshot = "public/uploads/crazy-cool-websites-"+_slug+".png";
-            //var _options = {renderDelay: }
-            //webshot(post.link, screenshot, {renderDelay:2000}, function(error) {
-            webshot(post.link, screenshot, {renderDelay: 2000}, function(error) {
-              helpers.get_color(screenshot, function(color){
-                  
-                  screenshot = screenshot.replace("public/", "");
-                  var query = {_id: post._id}
-                  var update = {
-                      image: screenshot,
-                      color: color
-                  }
+            async.each(posts,
+                function(post, callback) {
+                    if (!post.image || post.image == undefined) {
+                        console.log("has no image")
+                        if (post.name)
+                            _slug = slug(post.name).toLowerCase();
+                        else
+                            _slug = Math.random().toString(36).substring(7);
+                        var screenshot = "uploads/crazy-cool-websites-" + _slug + ".png";
+                        webshot(post.link, "public/" + screenshot, {
+                            renderDelay: 2000
+                        }, function(error) {
+                            
+                            helpers.get_color("public/" + screenshot, function(color) {
+                                console.log("- screenshot", screenshot);
+                                console.log("- color", color);
 
-                  console.log("- screenshot", screenshot);
-                  console.log("- color",color);
-                  
-                  Post.findOneAndUpdate(query, update, {upsert: true, 'new': true}, function (err, post, raw) {
-                      callback();
-                  });
-              });
-            });
-          }
-          
-        },
-        function(err){
-          res.send("done")
-        });
-    });
-});
+                                var query = {
+                                    _id: post._id
+                                }
+                                var update = {
+                                    image: screenshot,
+                                    color: color
+                                }
 
-router.get('/image-n-color/:id', function (req, res, next) {
-  Post
-    .findOne({_id: req.params.id})
-    .exec(function(err, post) {
-    if (err) {
-        console.log(err);
-        return next(err);
-    }
-    if(!post.color){
-      if(post.name)
-          _slug = slug(post.name).toLowerCase();
-      else 
-          _slug = Math.random().toString(36).substring(7);
-      
-      console.log("slug",_slug)
+                                Post.findOneAndUpdate(query, update, {
+                                    upsert: true,
+                                    'new': true
+                                }, function(err, post, raw) {
+                                    callback()
+                                });
+                            });
+                        });
+                    }else{
+                        console.log("has image", post.image)
+                        helpers.get_color("public/" + post.image, function(color) {
+                            console.log("- screenshot", post.image);
+                            console.log("- color", color);
 
-      var screenshot = "public/uploads/crazy-cool-websites-"+_slug+".png";
-      console.log(app.locals.root_url+"/"+screenshot)
-      webshot(post.link, screenshot, {renderDelay: 2000}, function(error) {
-        if(!error){       
-      
-            helpers.get_color(screenshot, function(color){
-              screenshot = screenshot.replace("public/", "");
-              var query = {_id: post._id}
-              var update = {
-                  image: screenshot,
-                  color: color
-              }
+                            var query = {
+                                _id: post._id
+                            }
+                            var update = {
+                                color: color
+                            }
 
-              console.log("- screenshot", screenshot);
-              console.log("- color",color);
-              
-              Post.findOneAndUpdate(query, update, {upsert: true, 'new': true}, function (err, post, raw) {
-                  return res.json(post)
-              });
-            })
-
-            /*color(app.locals.root_url+"/"+screenshot, function(err, color){
-                if(err){
-                    console.log("color err",err)
-                    var update = {image: screenshot}
-                    Post.findOneAndUpdate(query, update, {upsert: true, 'new': true}, function (err, post, raw) {
-                        return res.json(post)
-                    });
-                }else{
-                    var update = {
-                        image: screenshot,
-                        color: color
+                            Post.findOneAndUpdate(query, update, {
+                                upsert: true,
+                                'new': true
+                            }, function(err, post, raw) {
+                                callback()
+                            });
+                        });
                     }
-
-                    console.log("- screenshot", screenshot);
-                    console.log("- color",color);
-                  
-                    Post.findOneAndUpdate(query, update, {upsert: true, 'new': true}, function (err, post, raw) {
-                        return res.json(post)
-                    });
-                }
+                }, function (err) {
+                    // result now equals 'done'
+                    return res.send("done")
+            });
             
+        });
+});
+
+router.get('/image-n-color/:id', function(req, res, next) {
+    Post
+        .findOne({
+            _id: req.params.id
+        })
+        .exec(function(err, post) {
+            if (err) {
+                console.log(err);
+                return next(err);
+            }
+            if (!post.color) {
+                if (post.name)
+                    _slug = slug(post.name).toLowerCase();
+                else
+                    _slug = Math.random().toString(36).substring(7);
+
+                console.log("slug", _slug)
+
+                var screenshot = "public/uploads/crazy-cool-websites-" + _slug + ".png";
+                console.log(app.locals.root_url + "/" + screenshot)
+                webshot(post.link, screenshot, {
+                    renderDelay: 2000
+                }, function(error) {
+                    if (!error) {
+
+                        helpers.get_color(screenshot, function(color) {
+                            screenshot = screenshot.replace("public/", "");
+                            var query = {
+                                _id: post._id
+                            }
+                            var update = {
+                                image: screenshot,
+                                color: color
+                            }
+
+                            console.log("- screenshot", screenshot);
+                            console.log("- color", color);
+
+                            Post.findOneAndUpdate(query, update, {
+                                upsert: true,
+                                'new': true
+                            }, function(err, post, raw) {
+                                return res.json(post)
+                            });
+                        })
+
+                        /*color(app.locals.root_url+"/"+screenshot, function(err, color){
+                            if(err){
+                                console.log("color err",err)
+                                var update = {image: screenshot}
+                                Post.findOneAndUpdate(query, update, {upsert: true, 'new': true}, function (err, post, raw) {
+                                    return res.json(post)
+                                });
+                            }else{
+                                var update = {
+                                    image: screenshot,
+                                    color: color
+                                }
+
+                                console.log("- screenshot", screenshot);
+                                console.log("- color",color);
+                              
+                                Post.findOneAndUpdate(query, update, {upsert: true, 'new': true}, function (err, post, raw) {
+                                    return res.json(post)
+                                });
+                            }
+            
+                        });*/
+                    } else {
+                        console.log("webshot error", error)
+                        return res.json(post)
+                    }
+                });
+            } else {
+                return res.json(post)
+            }
+            /*
+            Options.findOneAndUpdate(
+                {'meta.key': 'first_post_timestamp'}, 
+                {'meta.value': unix}, 
+                {upsert: true, 'new': false}, 
+                function (err, options, raw) {
+                if (err) {
+                    return console.log(err);
+                } 
+
+                //callback(err, {success:true});
             });*/
-        }else{
-          console.log("webshot error",error)
-          return res.json(post)
-        }
-      });
-    }else{
-      return res.json(post)
-    }
-    /*
-    Options.findOneAndUpdate(
-        {'meta.key': 'first_post_timestamp'}, 
-        {'meta.value': unix}, 
-        {upsert: true, 'new': false}, 
-        function (err, options, raw) {
-        if (err) {
-            return console.log(err);
-        } 
 
-        //callback(err, {success:true});
-    });*/
-
-  });
-  
-});
-
-router.get('/t', function (req, res, next) {
-
-  var file = 'public/uploads/crazy-cool-websites-dj-marcelleanother-nice-mess.png';
-  var url = app.locals.root_url+'/'+file;
-  
-  helpers.get_color(file, function(color){
-    return res.send(color)
-  })
-  
-  
-  //var u = "https://cdn.techterms.com/img/lg/binary_14.jpg";
-  
+        });
 
 });
 
-router.get('/drop', function (req, res, next) {
-  req.resetDb();
-  res.redirect("/");
+router.get('/t', function(req, res, next) {
+    Post
+        .find()
+        //.limit(5)
+        .sort({
+            updated_time: 'desc'
+        })
+        .exec(function(err, posts) {
+            var file = posts[0].image
+            console.log(file )
+    /*var file = 'public/uploads/crazy-cool-websites-dj-marcelleanother-nice-mess.png';
+    var url = app.locals.root_url + '/' + file;
+
+    helpers.get_color(file, function(color) {
+        return res.send(color)
+    })*/
+
+            helpers.get_color("public/"+file, function(color) {
+                return res.send(color)
+            })
+
+        });
+
+});
+
+router.get('/drop', function(req, res, next) {
+    req.resetDb();
+    res.redirect("/api/posts");
+    //res.send("done")
 });
