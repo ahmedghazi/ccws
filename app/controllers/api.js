@@ -205,6 +205,7 @@ router.get('/media/:id', function(req, res, next) {
             if (!post)return res.json(post)
             if (post.link.indexOf("facebook.com") > -1)return res.json(post)
             if (post.link.indexOf("float.gallery") > -1)return res.json(post)
+            if (post.link.indexOf("eidos.digital") > -1)return res.json(post)
             if (post.name == "tig.ht")return res.json(post)
             if (post.color && post.color != "")return res.json(post);
 

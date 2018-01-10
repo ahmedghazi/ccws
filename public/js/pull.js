@@ -31,7 +31,7 @@ var pull = (function () {
             if(c < data.length){
                 pull(data);
                 var html = $("#result").html();
-                if(res)html += "<div>"+res.name+" : "+res.image+" - "+res.color+"</div>";
+                if(res)html += "<div>"+c+" : "+res.name+" : "+res.image+" - "+res.color+"</div>";
                 if(res)$("#result").html(html)
             }else{
                 var html = $("#result").html();
