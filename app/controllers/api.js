@@ -105,7 +105,7 @@ router.get('/count', function(req, res, next) {
 router.get('/all', function (req, res, next) {
     return Post
         .find()
-        .sort({name: 'desc'})
+        .sort({updated_time: 'desc'})
         //.limit(postsPerPage)
         .exec(function(err, posts) {
             if (err) {
@@ -189,26 +189,7 @@ router.get('/media', function(req, res, next) {
         });
 });
 
-router.get("/in", function(req, res, next){
-    var query = {
-        link: 'http://tig.ht/'
-    }
-    var update = { 
-        link: 'http://tig.ht/',
-        fbid: '393558204075688_1469262633171901',
-        name: 'tig.ht',
-        message: 'http://tig.ht/',
-        description: null,
-        from: 'Sebastian Zimmerhackl',
-        updated_time: "2018-01-02T23:08:32.000Z" 
-    }
-    Post.findOneAndUpdate(query, update, {
-            upsert: true,
-            'new': true
-        }, function(err, post, raw) {
-            return res.json(post)
-        });
-})
+
 
 router.get('/media/:id', function(req, res, next) {
     Post
@@ -223,7 +204,8 @@ router.get('/media/:id', function(req, res, next) {
             //console.log(post)
             if (!post)return res.json(post)
             if (post.name == "tig.ht")return res.json(post)
-
+            if (post.color == "")return res.json(post);
+        
             if (post.name)
                 _slug = slug(post.name).toLowerCase();
             else
