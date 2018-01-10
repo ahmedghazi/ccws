@@ -241,7 +241,7 @@ exports.get_color = function(image, callback) {
                 image: data
             }
         };*/
-        request.post('http://pictaculous.com/api/1.0/', {form:{image:data}}, function optionalCallback(err, httpResponse, body) {
+        request.post('http://pictaculous.com/api/1.0/', {formData:{image:data}}, function optionalCallback(err, httpResponse, body) {
             if (err) {
                 return console.error('upload failed:', err);
             }
