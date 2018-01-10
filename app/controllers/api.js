@@ -329,7 +329,7 @@ router.get('/color', function(req, res, next) {
 
             async.each(posts,
                 function(post, callback) {
-                    if (!post.image || post.image == undefined) {
+                    if (!post.image || post.image.indexOf("3005") == -1) {
                         console.log("has no image")
                         if (post.name)
                             _slug = slug(post.name).toLowerCase();
