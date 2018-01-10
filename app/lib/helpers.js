@@ -237,7 +237,7 @@ exports.get_color = function(image, callback) {
         var options = {
             method: 'POST',
             url: 'http://pictaculous.com/api/1.0/',
-            formData: {
+            form: {
                 image: data
             }
         };
