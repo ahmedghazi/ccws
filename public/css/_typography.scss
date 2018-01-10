@@ -24,10 +24,10 @@ h2{
 }
 
 a {
-	color: blue;
+	color: $color;
 	text-decoration: none;
 	cursor: url(../img/cursor-pointer.png) 31 23,auto;
-	&:hover{color: $color}
+	&:hover{color: $darkerGrey}
 }
 
 .btn{

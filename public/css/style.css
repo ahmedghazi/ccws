@@ -446,7 +446,7 @@ a {
   text-decoration: none;
   cursor: url(../img/cursor-pointer.png) 31 23, auto; }
   a:hover {
-    color: #000; }
+    color: #afafaf; }
 
 .btn {
   border: 2px solid;
@@ -2576,7 +2576,7 @@ section {
   line-height: 1.2em;
   margin-bottom: 1em; }
   .about p a {
-    color: blue; }
+    color: #afafaf; }
 
 header {
   background-color: #f3f3f3;
@@ -2661,7 +2661,7 @@ header {
       text-overflow: ellipsis;
       width: 100%;
       overflow: hidden;
-      color: #9f9f9f; }
+      color: gray; }
     .liste .item figure {
       display: inline-block;
       vertical-align: top;
@@ -2693,8 +2693,12 @@ header {
         overflow-x: auto;
         width: auto;
         animation: autoradio 5s linear infinite alternate; }
+      .liste .item:hover .title,
+      .liste .item:hover .date,
+      .liste .item:hover .from {
+        color: black; }
       .liste .item:hover .url {
-        color: blue !important; }
+        color: #afafaf !important; }
     .liste .item .col-left:hover + .col-right img {
       position: fixed;
       top: 50%;
