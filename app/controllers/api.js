@@ -199,48 +199,25 @@ router.get('/media/:id', function(req, res, next) {
                 console.log(err);
                 return next(err);
             }
-            if (!post.image || post.image.indexOf("crazy-cool-websites") == -1) {
-                console.log("has no image")
-                if (post.name)
-                    _slug = slug(post.name).toLowerCase();
-                else
-                    _slug = Math.random().toString(36).substring(7);
+            if (post.name)
+                _slug = slug(post.name).toLowerCase();
+            else
+                _slug = Math.random().toString(36).substring(7);
+            
+            var screenshot = "uploads/crazy-cool-websites-" + _slug + ".png";
+            webshot(post.link, "public/" + screenshot, {
+                renderDelay: 2000
+            }, function(error) {
                 
-                var screenshot = "uploads/crazy-cool-websites-" + _slug + ".png";
-                webshot(post.link, "public/" + screenshot, {
-                    renderDelay: 2000
-                }, function(error) {
-                    
-                    helpers.get_color("public/" + screenshot, function(color) {
-                        console.log("- screenshot", screenshot);
-                        console.log("- color", color);
-
-                        var query = {
-                            _id: post._id
-                        }
-                        var update = {
-                            image: screenshot,
-                            color: color
-                        }
-
-                        Post.findOneAndUpdate(query, update, {
-                            upsert: true,
-                            'new': true
-                        }, function(err, post, raw) {
-                            return res.json(post)
-                        });
-                    });
-                });
-            }else{
-                console.log("has image", post.image)
-                helpers.get_color("public/" + post.image, function(color) {
-                    console.log("- screenshot", post.image);
+                helpers.get_color("public/" + screenshot, function(color) {
+                    console.log("- screenshot", screenshot);
                     console.log("- color", color);
-
+                    screenshot = screenshot.replace("public/", "");
                     var query = {
                         _id: post._id
                     }
                     var update = {
+                        image: screenshot,
                         color: color
                     }
 
@@ -251,7 +228,7 @@ router.get('/media/:id', function(req, res, next) {
                         return res.json(post)
                     });
                 });
-            }
+            });
 
         });
 
