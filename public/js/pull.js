@@ -30,8 +30,10 @@ var pull = (function () {
             c++;
             if(c < data.length){
                 pull(data);
-                var html = $("#result").html();
+                var html = "";
+                //var html += $("#result").html();
                 if(res)html += "<div>"+c+" : "+res.name+" : "+res.image+" - "+res.color+"</div>";
+                html += $("#result").html();
                 if(res)$("#result").html(html)
             }else{
                 var html = $("#result").html();

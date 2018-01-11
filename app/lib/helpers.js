@@ -6,7 +6,7 @@ var express = require('express'),
     Post = mongoose.model('Post'),
     request = require('request'),
     fs = require("fs"),
-    //extract = require('meta-extractor'),
+    extract = require('meta-extractor'),
     webshot = require('node-webshot'),
     slug = require('slug'),
     moment = require('moment'),
@@ -224,18 +224,55 @@ exports.updateOptions = function(key, value, callback) {
         });
 };
 
+exports.get_screenshot = function(post, callback) {
+    if (post.name)
+        _slug = slug(post.name).toLowerCase();
+    else
+        _slug = Math.random().toString(36).substring(7);
+    var screenshot = "uploads/crazy-cool-websites-" + _slug + ".png";
+
+    webshot(post.link, "public/" + screenshot, {
+        renderDelay: 1500
+    }, function(error) {
+        if(error){
+            
+            extract({ uri: post.link }, function(err, res) {
+                if(err){
+                    callback("")
+                //console.log(res)
+                }else{
+                    if(res && res.ogImage){
+                        request.head(res.ogImage, function(_err, _res, body){
+                            //console.log('content-type:', res.headers['content-type']);
+                            //console.log('content-length:', res.headers['content-length']);
+                            if(res.ogImage.indexOf("jpg") > -1)screenshot.replace("png", "jpg");
+                            request(res.ogImage).pipe(fs.createWriteStream("public/" + screenshot)).on('close', function(){
+                                callback(screenshot)
+                            });
+                        });
+                    }else{
+                        callback("")
+                    }
+                }
+                
+            });
+        }else{
+            callback(screenshot)
+        }
+    });
+};
+
 exports.get_color = function(image, callback) {
-    //if (image.indexOf("public") == -1) image = "public/" + image;
     console.log("get_color image",image)
     fs.readFile(image, function(err, data) {
-        if (err) {
-            callback("");
-            //throw err; // Fail if the file can't be read.
-        }
+        if (err) callback("");
+
         //console.log(data)
-        if (data == undefined) {
+        if (!data) {
+            console.log("data == undefined")
             callback("");
         }else{
+            console.log("data != undefined")
             //console.log("get_color data",data)
             request.post('http://pictaculous.com/api/1.0/', {formData:{image:data}}, function optionalCallback(err, httpResponse, body) {
                 if (err) {

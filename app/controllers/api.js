@@ -201,29 +201,22 @@ router.get('/media/:id', function(req, res, next) {
                 console.log(err);
                 return next(err);
             }
-            //console.log(post)
+
             if (!post)return res.json(post)
             if (post.link.indexOf("facebook.com") > -1)return res.json(post)
-            if (post.link.indexOf("float.gallery") > -1)return res.json(post)
+            /*if (post.link.indexOf("float.gallery") > -1)return res.json(post)
             if (post.link.indexOf("eidos.digital") > -1)return res.json(post)
             if (post.link.indexOf("panterosmediagalaxy.eu") > -1)return res.json(post)
-            if (post.link.indexOf("arket.com") > -1)return res.json(post)
-            if (post.link.indexOf("tig.ht") > -1)return res.json(post)
-            if (post.link.indexOf("https") > -1)return res.json(post)
+            if (post.link.indexOf("arket.com") > -1)return res.json(post)*/
+            //if (post.link.indexOf("tig.ht") > -1)return res.json(post)
+            //if (post.link.indexOf("https") > -1)return res.json(post)
 
             //if (post.name == "tig.ht")return res.json(post)
             if (post.color && post.color != "")return res.json(post);
 
-            if (post.name)
-                _slug = slug(post.name).toLowerCase();
-            else
-                _slug = Math.random().toString(36).substring(7);
-            
-            var screenshot = "uploads/crazy-cool-websites-" + _slug + ".png";
-            webshot(post.link, "public/" + screenshot, {
-                renderDelay: 1000
-            }, function(error) {
-                
+            helpers.get_screenshot(post, function(screenshot) {
+                if(!screenshot || screenshot == "") return res.json(post)
+
                 helpers.get_color("public/" + screenshot, function(color) {
                     console.log("- screenshot", screenshot);
                     console.log("- color", color);
@@ -232,8 +225,8 @@ router.get('/media/:id', function(req, res, next) {
                         _id: post._id
                     }
                     var update = {
-                        image: screenshot,
-                        color: color
+                    //    image: screenshot,
+                    //    color: color
                     }
 
                     Post.findOneAndUpdate(query, update, {
@@ -244,7 +237,6 @@ router.get('/media/:id', function(req, res, next) {
                     });
                 });
             });
-
         });
 
 });
@@ -276,6 +268,11 @@ router.get('/t', function(req, res, next) {
 
 router.get('/drop', function(req, res, next) {
     req.resetDb();
-    res.redirect("/api/posts");
+    res.redirect("/api");
     //res.send("done")
 });
+
+/*
+mongodump --db sniff-development
+mongorestore --db sniff-development ./sniff-development
+*/

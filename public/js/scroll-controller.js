@@ -17,7 +17,7 @@ var scrollController = (function () {
         var max = $(".autoradio").width()
         $(".autoradio:not(.can) .name").each(function(idx, el){
             var w = $(el).width();
-            console.log(w, max)
+            //console.log(w, max)
             if(w > max)$(el).parent().addClass("can");
         })
     }
