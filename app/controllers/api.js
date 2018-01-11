@@ -203,9 +203,11 @@ router.get('/media/:id', function(req, res, next) {
             }
 
             if (!post)return res.json(post)
+            if (post.color && post.color != "")return res.json(post);
+
             if (post.link.indexOf("facebook.com") > -1)return res.json(post)
             if (post.link.indexOf("gradient.world") > -1)return res.json(post)
-            if (post.link.indexOf("img.modem.studio") > -1)return res.json(post)
+            if (post.link.indexOf("modem.studio") > -1)return res.json(post)
             /*if (post.link.indexOf("eidos.digital") > -1)return res.json(post)
             if (post.link.indexOf("panterosmediagalaxy.eu") > -1)return res.json(post)
             if (post.link.indexOf("arket.com") > -1)return res.json(post)*/
@@ -213,7 +215,7 @@ router.get('/media/:id', function(req, res, next) {
             //if (post.link.indexOf("https") > -1)return res.json(post)
 
             //if (post.name == "tig.ht")return res.json(post)
-            if (post.color && post.color != "")return res.json(post);
+            
 
             helpers.get_screenshot(post, function(screenshot) {
                 if(!screenshot || screenshot == "") return res.json(post)
