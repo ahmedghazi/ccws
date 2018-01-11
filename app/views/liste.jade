@@ -3,8 +3,8 @@ each post in posts
     if post.color && post.color != "FFFFFF"
         -color = post.color;
 
-    .item(id="#{post._id}" style="color:##{color}")
-        a(href="#{post.link}" target="_blank")
+    .item(id="#{post._id}")
+        a(href="#{post.link}" target="_blank" style="color:##{color}")
             .row
                
                 if post.link && post.name
