@@ -21,14 +21,17 @@ var pull = (function () {
 
     function pull(data) {
         var id = data[c]._id;
+        console.log("calling : "+data[c].name)
         $.ajax({
           method: "GET",
           url: '/api/media/'+id
         })
         .done(function( res ) {
-            console.log(res)
+            
             c++;
             if(c < data.length){
+                console.log("res")
+                console.log(res)
                 pull(data);
                 var html = "";
                 //var html += $("#result").html();

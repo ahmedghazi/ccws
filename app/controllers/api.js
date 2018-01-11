@@ -203,12 +203,14 @@ router.get('/media/:id', function(req, res, next) {
             }
 
             if (!post)return res.json(post)
+            
             if (post.color && post.color != "")return res.json(post);
 
             if (post.link.indexOf("facebook.com") > -1)return res.json(post)
             if (post.link.indexOf("gradient.world") > -1)return res.json(post)
-            if (post.link.indexOf("modem.studio") > -1)return res.json(post)
-            if (post.name == "img.modem.studio")return res.json(post)
+            if (post.link.indexOf("trumpwith.love") > -1)return res.json(post)
+            //if (post.name == "img.modem.studio")return res.json(post)
+     
             /*if (post.link.indexOf("eidos.digital") > -1)return res.json(post)
             if (post.link.indexOf("panterosmediagalaxy.eu") > -1)return res.json(post)
             if (post.link.indexOf("arket.com") > -1)return res.json(post)*/
