@@ -204,8 +204,8 @@ router.get('/media/:id', function(req, res, next) {
 
             if (!post)return res.json(post)
             if (post.link.indexOf("facebook.com") > -1)return res.json(post)
-            /*if (post.link.indexOf("float.gallery") > -1)return res.json(post)
-            if (post.link.indexOf("eidos.digital") > -1)return res.json(post)
+            if (post.link.indexOf("gradient.world") > -1)return res.json(post)
+            /*if (post.link.indexOf("eidos.digital") > -1)return res.json(post)
             if (post.link.indexOf("panterosmediagalaxy.eu") > -1)return res.json(post)
             if (post.link.indexOf("arket.com") > -1)return res.json(post)*/
             //if (post.link.indexOf("tig.ht") > -1)return res.json(post)
