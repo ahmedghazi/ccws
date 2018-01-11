@@ -2662,8 +2662,7 @@ header {
       white-space: nowrap;
       text-overflow: ellipsis;
       width: 100%;
-      overflow: hidden;
-      color: gray; }
+      overflow: hidden; }
     .liste .item figure {
       display: inline-block;
       vertical-align: top;
