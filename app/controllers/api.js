@@ -225,8 +225,8 @@ router.get('/media/:id', function(req, res, next) {
                         _id: post._id
                     }
                     var update = {
-                    //    image: screenshot,
-                    //    color: color
+                        image: screenshot,
+                        color: color
                     }
 
                     Post.findOneAndUpdate(query, update, {
