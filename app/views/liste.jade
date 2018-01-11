@@ -8,8 +8,10 @@ each post in posts
                     .col-xs-6.col-left
                         div.title
                             div.autoradio
-                                span.name #{post.name}
-                         
+                                if post.color
+                                    span.name(style="color:#{post.color}") #{post.name}
+                                else
+                                    span.name #{post.name}
                         div.metas
                             //span POSTED #{moment(post.updated_time).format('MM.DD.YY HH:MM')}
                             .row

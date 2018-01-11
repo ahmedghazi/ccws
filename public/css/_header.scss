@@ -5,6 +5,8 @@ header{
 	width: 100vw;
 	z-index: 99999;
 	@include anime(.1s);
+
+	.total_posts{color: blue;}
 	nav{
 		@include anime(.1s);
 	}
