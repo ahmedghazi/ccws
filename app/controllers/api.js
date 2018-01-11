@@ -207,8 +207,11 @@ router.get('/media/:id', function(req, res, next) {
             if (post.link.indexOf("float.gallery") > -1)return res.json(post)
             if (post.link.indexOf("eidos.digital") > -1)return res.json(post)
             if (post.link.indexOf("panterosmediagalaxy.eu") > -1)return res.json(post)
+            if (post.link.indexOf("arket.com") > -1)return res.json(post)
+            if (post.link.indexOf("tig.ht") > -1)return res.json(post)
+            if (post.link.indexOf("https") > -1)return res.json(post)
 
-            if (post.name == "tig.ht")return res.json(post)
+            //if (post.name == "tig.ht")return res.json(post)
             if (post.color && post.color != "")return res.json(post);
 
             if (post.name)
