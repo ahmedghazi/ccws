@@ -2587,6 +2587,8 @@ header {
   width: 100vw;
   z-index: 99999;
   transition: all 0.1s ease-in-out 0s; }
+  header .total_posts {
+    color: blue; }
   header nav {
     transition: all 0.1s ease-in-out 0s; }
   header nav.menu li {
@@ -2687,18 +2689,16 @@ header {
         .liste .item figure img.img404 {
           display: none; }
     .liste .item:hover {
-      z-index: 9999; }
+      z-index: 9999;
+      /*.title,
+      .date,
+      .from{color: $color;}
+      .url{color: $darkerGrey!important}*/ }
       .liste .item:hover .autoradio.can {
         text-overflow: initial;
         overflow-x: auto;
         width: auto;
         animation: autoradio 5s linear infinite alternate; }
-      .liste .item:hover .title,
-      .liste .item:hover .date,
-      .liste .item:hover .from {
-        color: black; }
-      .liste .item:hover .url {
-        color: #afafaf !important; }
     .liste .item .col-left:hover + .col-right img {
       position: fixed;
       top: 50%;
