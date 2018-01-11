@@ -1,5 +1,9 @@
 each post in posts
-    .item(id="#{post._id}")
+    -var color = "000";
+    if post.color && post.color != "FFFFFF"
+        -color = post.color;
+
+    .item(id="#{post._id}" style="color:##{color}")
         a(href="#{post.link}" target="_blank")
             .row
                
@@ -8,10 +12,7 @@ each post in posts
                     .col-xs-6.col-left
                         div.title
                             div.autoradio
-                                if post.color && post.color != "FFFFFF"
-                                    span.name(style="color:##{post.color}") #{post.name}
-                                else
-                                    span.name #{post.name}
+                                span.name #{post.name}
                         div.metas
                             //span POSTED #{moment(post.updated_time).format('MM.DD.YY HH:MM')}
                             .row
