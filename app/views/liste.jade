@@ -8,7 +8,7 @@ each post in posts
                     .col-xs-6.col-left
                         div.title
                             div.autoradio
-                                if post.color
+                                if post.color && post.color != "FFFFFF"
                                     span.name(style="color:##{post.color}") #{post.name}
                                 else
                                     span.name #{post.name}
