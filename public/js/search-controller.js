@@ -37,10 +37,10 @@ var navController = (function () {
             
         });*/
 
-        $(document).on( 'click', '#contributors-toggle', function(e) {
+        /*$(document).on( 'click', '#contributors-toggle', function(e) {
             $(this).toggleClass("active");
             $(".from").toggle()
-        });
+        });*/
 
     }
 

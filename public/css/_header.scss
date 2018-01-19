@@ -4,11 +4,12 @@ header{
 	padding: $padding2;
 	width: 100vw;
 	z-index: 99999;
-	@include anime(.1s);
-
-	.total_posts{color: blue;}
+	@include anime(.2s);
+	height: 80px;
+	.total_posts{}
 	nav{
-		@include anime(.1s);
+		@include anime(.2s);
+		position: absolute;
 	}
 	nav.menu{
 		li{
@@ -37,7 +38,8 @@ header{
 	}
 	
 	nav.extra{
-		height: 100%;
+		width: calc(100% - 0.5em);
+		height: 100%; min-height: 44px;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
@@ -53,10 +55,18 @@ header{
 		}
 	}
 	&.affix{
+		height: 52px;
 		nav{
-			position: absolute;
+			//position: absolute;
 			transform: translateY(-100%);
 			opacity: 0;
+		}
+	}
+	&:hover{
+		height: 80px;
+		nav{
+			transform: translateY(0);
+			opacity: 1;
 		}
 	}
 }

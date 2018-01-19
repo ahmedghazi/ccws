@@ -477,7 +477,8 @@ a {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  display: none; }
+  display: none;
+  z-index: 999999; }
   #loader:hover {
     cursor: none; }
   .is-exiting #loader {
@@ -2574,6 +2575,7 @@ section {
 .about p {
   font-size: 60px;
   line-height: 1.2em;
+  line-height: 58px;
   margin-bottom: 1em; }
   .about p a {
     color: #afafaf; }
@@ -2586,11 +2588,11 @@ header {
   padding: 20px;
   width: 100vw;
   z-index: 99999;
-  transition: all 0.1s ease-in-out 0s; }
-  header .total_posts {
-    color: blue; }
+  transition: all 0.2s ease-in-out 0s;
+  height: 80px; }
   header nav {
-    transition: all 0.1s ease-in-out 0s; }
+    transition: all 0.2s ease-in-out 0s;
+    position: absolute; }
   header nav.menu li {
     cursor: url(../img/cursor-pointer.png) 31 23, auto;
     line-height: 1.2em;
@@ -2623,7 +2625,9 @@ header {
     header nav.menu li #contributors-toggle.active:after {
       content: "-"; }
   header nav.extra {
+    width: calc(100% - 0.5em);
     height: 100%;
+    min-height: 44px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -2634,10 +2638,16 @@ header {
       display: flex;
       justify-content: space-between;
       color: white; }
-  header.affix nav {
-    position: absolute;
-    transform: translateY(-100%);
-    opacity: 0; }
+  header.affix {
+    height: 52px; }
+    header.affix nav {
+      transform: translateY(-100%);
+      opacity: 0; }
+  header:hover {
+    height: 80px; }
+    header:hover nav {
+      transform: translateY(0);
+      opacity: 1; }
 
 .liste {
   margin-bottom: 40px; }
@@ -2655,7 +2665,8 @@ header {
         text-overflow: ellipsis;
         width: 100%;
         overflow: hidden;
-        display: flex; }
+        display: flex;
+        letter-spacing: -0.01em; }
         .liste .item .title .autoradio span {
           flex-shrink: 0; }
     .liste .item .url {
@@ -2693,6 +2704,8 @@ header {
       .date,
       .from{color: $color;}
       .url{color: $darkerGrey!important}*/ }
+      .liste .item:hover a {
+        color: black !important; }
       .liste .item:hover .autoradio.can {
         text-overflow: initial;
         overflow-x: auto;

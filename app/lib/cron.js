@@ -19,8 +19,8 @@ exports.cronStart = function(app, next){
     var rule = new schedule.RecurrenceRule();
     //rule.dayOfWeek = [1, 2, 3, 4, 5];
     //rule.dayOfWeek = "*";
-    //rule.hour = "*";
-    rule.minute = "10";
+    rule.hour = "6";
+    //rule.minute = "10";
     //rule.minute = "17";
     //rule.second = "50";
 console.log('cronStart', new Date());

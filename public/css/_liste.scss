@@ -4,7 +4,6 @@
 		margin-bottom: $marge2;
 		cursor: url(../img/cursor-pointer.png) 31 23,auto;
 
-		
 		.title{
 			overflow-x: hidden;
 			position: relative; min-height: 60px;
@@ -19,6 +18,7 @@
 				overflow: hidden;
 				//transform: translate(-50%, 0);
 				display: flex;
+				letter-spacing: -0.01em;
 				span{
 					//display: inline-block;
 					flex-shrink: 0;
@@ -67,6 +67,7 @@
 		
 		&:hover{
 			z-index: 9999;
+			a{color: black!important;}
 			.autoradio.can{
 				text-overflow:initial;
 				overflow-x: auto;

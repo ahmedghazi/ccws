@@ -23,6 +23,7 @@
     "meta-extractor": "^1.2.0",
     "method-override": "^2.3.0",
     "moment": "^2.20.1",
+    "moment-timezone": "^0.5.14",
     "mongoose": "^4.1.2",
     "morgan": "^1.6.1",
     "node-schedule": "^1.2.5",
