@@ -30,12 +30,17 @@
                             li
                                 div.berlin BERLIN
                                 //div.time #{moment().tz("Europe/Berlin").format("ha")}
+                                div.time #{moment().utcOffset("+01:00").format("ha")}
+                                
                             li
                                 div.nyc NEW YORK
                                 //div.time #{moment().tz("America/New_York").format("ha")}
+                                div.time #{moment().utcOffset("-05:00").format("ha")}
+
                             li
                                 div.tokyo TOKYO
                                 //div.time #{moment().tz("Asia/Tokyo").format("ha")}
+                                div.time #{moment().utcOffset("+09:00").format("ha")}
 
                     .about
                         a(href="/about") ABOUT
