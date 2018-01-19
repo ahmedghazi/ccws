@@ -30,6 +30,7 @@ module.exports = function(app, config) {
   app.use(methodOverride());
 
   app.locals.moment = require('moment');
+  //app.locals.momentTz = require('moment-timezone');
   
   if(os.homedir() == "/Users/ahmedghazi"){
       app.locals.root_url = "http://localhost:3005";
