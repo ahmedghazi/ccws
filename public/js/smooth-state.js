@@ -13,6 +13,7 @@ var smoothState = (function () {
                 render: function ($container) {
                     // Add your CSS animation reversing class
                     $container.addClass('is-exiting');
+                    pubsub.emit("navChanging", null);
                     console.log("onStart")
                     // Restart your animation
                     //smoothState.restartCSSAnimations();

@@ -1,28 +1,38 @@
 (function( $ ) {
 	'use strict';
-
+	var x, y,bsDiv;
 	init();
 
 	function init(){
-		loader_mouse();
+		//loader_mouse();
 		setTimeout(function(){
 			$("body").removeClass("loading");
 		}, 1000);
 	}
 
 	function loader_mouse(){
-		var bsDiv = document.getElementById("loader");
-        var x, y;
-// On mousemove use event.clientX and event.clientY to set the location of the div to the location of the cursor:
+		bsDiv = document.getElementById("loader");
+
+		pubsub.on("navChanged", function(){
+			place_loader()
+		});
+		
+        /*
         window.addEventListener('mousemove', function(event){
-        	if(!document.body.classList.contains('loading'))return;
             x = event.clientX;
-            y = event.clientY;                    
-            if ( typeof x !== 'undefined' ){
-                bsDiv.style.left = x + "px";
-                bsDiv.style.top = y + "px";
-            }
+            y = event.clientY;     
+            //if(!document.body.classList.contains('loading'))return;
+
+            place_loader()
         }, false);
+        */
+	}
+
+	function place_loader(){
+		if ( typeof x !== 'undefined' ){
+		    bsDiv.style.left = x + "px";
+		    bsDiv.style.top = y + "px";
+		}
 	}
 
 	function count_click(){

@@ -2590,9 +2590,13 @@ header {
   z-index: 99999;
   transition: all 0.2s ease-in-out 0s;
   height: 80px; }
+  header .total_posts {
+    color: white; }
   header nav {
     transition: all 0.2s ease-in-out 0s;
     position: absolute; }
+    header nav a:hover {
+      color: white; }
   header nav.menu li {
     cursor: url(../img/cursor-pointer.png) 31 23, auto;
     line-height: 1.2em;
