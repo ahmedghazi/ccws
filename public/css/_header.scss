@@ -6,10 +6,13 @@ header{
 	z-index: 99999;
 	@include anime(.2s);
 	height: 80px;
-	.total_posts{}
+	.total_posts{color: white}
 	nav{
 		@include anime(.2s);
 		position: absolute;
+		a{
+			&:hover{color:white}
+		}
 	}
 	nav.menu{
 		li{
