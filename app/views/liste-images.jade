@@ -3,13 +3,19 @@ each post in posts
         -var color = "000";
         if post.color && post.color != "FFFFFF"
             -color = post.color;
+        if color  == "000000" || !color
+            -color = "FFFFFF";
+
         -var sizes = ["small","medium","large"];
         -var size = sizes[Math.round(Math.random()*2)]
         
         .item-image(id="#{post._id}" class="#{size}")
             a(href="#{post.link}" target="_blank")
                 
-                figure(style="background-color:##{post.color}")
+                figure(style="background-color:##{color}")
                     if post.color
-                        //div.placeholder(style="background-color:##{post.color}")
+                        //div.placeholder(style="background-color:##{color}")
                         img(src="#{root_url}/#{post.image}" width="" height="" onerror="this.className='img404'")
+                div(style="background-color:##{color}").overlay
+                    div.title #{post.name}
+                    div.url #{post.link}
