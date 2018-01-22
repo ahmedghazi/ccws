@@ -44,6 +44,8 @@ var scrollController = (function () {
             $("body").addClass("is-exiting");
             loading = true;
 
+            pubsub.emit("changing", null);
+
             //console.log(window.location)
             var path = window.location.origin
             if(window.location.href.indexOf("random") > -1)path = window.location.href;
@@ -65,6 +67,8 @@ console.log(path)
                     $("body").removeClass("is-exiting");
                     loading = false;
                     titles();
+
+                    pubsub.emit("changing", null);
                 });
         });
     }

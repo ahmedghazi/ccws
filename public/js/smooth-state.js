@@ -14,7 +14,7 @@ var smoothState = (function () {
                     // Add your CSS animation reversing class
                     $container.addClass('is-exiting');
                     pubsub.emit("navChanging", null);
-                    console.log("onStart")
+                    //console.log("onStart")
                     // Restart your animation
                     //smoothState.restartCSSAnimations();
                 }
@@ -28,8 +28,10 @@ var smoothState = (function () {
                     $container.html($newContent);
                     setTimeout(function(){
                         //$("body").attr('class', $("[name=bc]").val())
-                        console.log("onReady")
+                        //console.log("onReady")
                         pubsub.emit("navChanged", null);
+                        pubsub.emit("changing", null);
+                        
                         if($(".item") && $(".item").length - 30)$(".more").hide()
                         $container.removeClass('is-exiting');
                     }, 100);
