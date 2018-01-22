@@ -97,12 +97,14 @@ section{
 		&.move{
 			color: white;
 			text-align: center;
-			transform-origin:center;
+			transform-origin:right;
+			white-space: nowrap;
 			&.accr{
-				animation: screensaver 7s linear 0s infinite;
+				animation: screensaver 7s linear 0s infinite alternate;
+				
 			}
 			&.time{
-				animation: screensaver 8s linear 0s infinite;
+				animation: screensaver 7s linear 0s infinite  alternate;
 			}
 		}
 		&:nth-child(odd){
@@ -113,6 +115,6 @@ section{
 }
 
 @keyframes screensaver {
-    0%{transform: translateX(-100%)}
-    100%{transform: translateX(100%)}
+    0%{transform: translateX(-150%)}
+    100%{transform: translateX(150%)}
 }

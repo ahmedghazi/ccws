@@ -2655,11 +2655,12 @@ section {
     #screensaver .item.move {
       color: white;
       text-align: center;
-      transform-origin: center; }
+      transform-origin: right;
+      white-space: nowrap; }
       #screensaver .item.move.accr {
-        animation: screensaver 7s linear 0s infinite; }
+        animation: screensaver 7s linear 0s infinite alternate; }
       #screensaver .item.move.time {
-        animation: screensaver 8s linear 0s infinite; }
+        animation: screensaver 7s linear 0s infinite  alternate; }
     #screensaver .item:nth-child(odd) {
       display: -webkit-box;
       display: -webkit-flex;
@@ -2670,9 +2671,9 @@ section {
 
 @keyframes screensaver {
   0% {
-    transform: translateX(-100%); }
+    transform: translateX(-150%); }
   100% {
-    transform: translateX(100%); } }
+    transform: translateX(150%); } }
 header {
   background-color: #dadada;
   position: fixed;
@@ -2742,7 +2743,7 @@ header {
     .liste .item .title {
       overflow-x: hidden;
       position: relative;
-      min-height: 60px; }
+      min-height: 70px; }
       .liste .item .title .autoradio {
         height: 100%;
         position: absolute;
@@ -2751,8 +2752,6 @@ header {
         width: 100%;
         overflow: hidden;
         letter-spacing: -0.01em; }
-        .liste .item .title .autoradio span {
-          flex-shrink: 0; }
     .liste .item .url {
       white-space: nowrap;
       text-overflow: ellipsis;

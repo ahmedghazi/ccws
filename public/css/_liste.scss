@@ -6,7 +6,7 @@
 
 		.title{
 			overflow-x: hidden;
-			position: relative; min-height: 60px;
+			position: relative; min-height: 70px;
 			//margin-bottom: $marge1;
 			
 			.autoradio{
@@ -19,11 +19,7 @@
 				//transform: translate(-50%, 0);
 				//display: flex;
 				letter-spacing: -0.01em;
-				span{
-					//display: inline-block;
-					flex-shrink: 0;
-					//&.name{margin-right: 0.5em}
-				}
+				
 			}
 		}
 

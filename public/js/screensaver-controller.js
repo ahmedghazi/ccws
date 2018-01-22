@@ -5,8 +5,9 @@ var screensaverController = (function () {
     init()
     
     function init() {
-        $("#screensaver").hide();
+        //$("#screensaver").hide();
         bind_events()
+        delay_show();
     }
 
     function bind_events() {
