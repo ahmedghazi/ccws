@@ -2,7 +2,7 @@ var screensaverController = (function () {
     
     var delay = 10000;
 
-    //init()
+    init()
     
     function init() {
         //$("#screensaver").hide();
