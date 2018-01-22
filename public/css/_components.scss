@@ -21,3 +21,18 @@
 	animation: loader 1s linear infinite;
 }
 
+form{
+	font-size: $font3;
+	border-bottom: 3px solid;
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	
+	input{
+		background-color: transparent;
+		line-height: $font3;
+	}
+	#s{
+		@include placeholder(black);
+	}
+}

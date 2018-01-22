@@ -27,7 +27,7 @@ a {
 	color: $color;
 	text-decoration: none;
 	cursor: url(../img/cursor-pointer.png) 31 23,auto;
-	&:hover{color: $darkerGrey}
+	//&:hover{color: #fff}
 }
 
 .btn{

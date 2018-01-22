@@ -1,6 +1,6 @@
 each post in posts
     -var color = "000";
-    if post.color && post.color != "FFFFFF"
+    if post.color && post.color != "00FFFF"
         -color = post.color;
 
     .item(id="#{post._id}")
@@ -9,25 +9,25 @@ each post in posts
                
                 if post.link && post.name
                     
-                    .col-xs-6.col-left
+                    .col-xs-12.col-md-6.col-left
                         div.title
                             div.autoradio
                                 span.name #{post.name}
                         div.metas
-                            .row.bottom-xs
-                                .col-xs-6
+                            .row.top-xs
+                                .col-xs-3.col-md-6
                                     div.date Posted → #{moment(post.updated_time).format('MM.DD.YY — HH:MM')}
-                                .col-xs-6
+                                .col-xs-9.col-md-6
                                     div.url.text-right #{post.link}
-                    .col-xs-6.col-right
+                    .col-xs-12.col-md-6.col-right
                         .row.bottom-xs
-                            .col-xs-6
+                            .col-xs-12.col-md-6
                                 -var image = post.image
                                 if image
                                     figure
                                         if post.color
                                             div.placeholder(style="background-color:##{post.color}")
                                         img(src="#{root_url}/#{image}" width="" height="69" onerror="this.className='img404'")
-                            .col-xs-6
+                            .col-xs-12.col-md-6
                                 div.from.text-right #{post.from}
 

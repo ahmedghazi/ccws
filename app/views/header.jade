@@ -1,46 +1,59 @@
 .row
-    .col-xs-6
+    .col-xs-12.col-md-6
         .row
-            .col-xs-6
+            .col-xs-10.col-md-6
                 h1 
                     a(href="/") 
                         span #{title} 
                         if total_posts
                             span.total_posts (#{total_posts})
-            .col-xs-6
-                //a(href="https://www.facebook.com/groups/393558204075688" target="_blank") FB Group
-    .col-xs-6
+            .col-xs-12.col-md-6
+                div.text-left
+                    //a(href="https://www.facebook.com/groups/393558204075688" target="_blank") ↝ Group
+    .col-xs-12.col-md-6.nav
         .row
-            .col-xs-6
+            .col-xs-12.col-md-6
                 nav.menu
                     ul
                         li
-                            input(type="text" id="s" placeholder="SEARCH" autocomplete="off" value="SEARCH")
+                            //input(type="text" id="s" placeholder="SEARCH" autocomplete="off" value="SEARCH")
+                            a(href="/search" class="no-smoothState") SEARCH
                         li
                             a(href="/random") RANDOM
-                        //li
-                            span#images-view IMAGES VIEW
                         li
-                             a(href="/contributors") CONTRIBUTORS
+                            a(href="/images") IMAGES VIEW
+                        li
+                            a(href="/contributors") CONTRIBUTORS
+
+                    
                         
-            .col-xs-6
+            .col-xs-12.col-md-6
                 nav.extra
                     .timestamps
                         ul
                             li
-                                div.berlin BERLIN
+                                div.city.berlin BERLIN
                                 //div.time #{moment().tz("Europe/Berlin").format("ha")}
                                 div.time #{moment().utcOffset("+01:00").format("ha")}
                                 
                             li
-                                div.nyc NEW YORK
+                                div.city.nyc NEW YORK
                                 //div.time #{moment().tz("America/New_York").format("ha")}
                                 div.time #{moment().utcOffset("-05:00").format("ha")}
 
                             li
-                                div.tokyo TOKYO
+                                div.city.tokyo TOKYO
                                 //div.time #{moment().tz("Asia/Tokyo").format("ha")}
                                 div.time #{moment().utcOffset("+09:00").format("ha")}
 
                     .about
                         a(href="/about") ABOUT
+
+.burger.visible-xs
+    i
+
+#search.slideTop
+    form
+        input(type="text" id="s" name="s" placeholder="SEARCH" autocomplete="off" value="")
+        input(type="submit" value="↝")    
+

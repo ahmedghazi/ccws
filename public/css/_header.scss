@@ -6,54 +6,49 @@ header{
 	z-index: 99999;
 	@include anime(.2s);
 	height: 80px;
+	height: 104px;
+	a{
+		&:hover{color: white;}
+	}
 	.total_posts{color: white}
 	nav{
 		@include anime(.2s);
 		position: absolute;
-		a{
-			&:hover{color:white}
+		li{
+			margin-bottom: 2px;
+			a{
+				line-height: 1.0em;
+				//color:white!important;
+				//&:hover{color:white}
+				position: relative;
+				left: 1px;
+			}
 		}
 	}
 	nav.menu{
+		position: relative;
 		li{
 			cursor: url(../img/cursor-pointer.png) 31 23,auto;
-			line-height: 1.2em;
-			min-height: $font1 + 1px;
-			font-size: $font1;
-			#s{
-				display: block;
-				background-color: transparent;
-				padding: 0; border: none;
-				line-height: 1.1em;
-				@include placeholder(black);
-			}
-
-			#contributors-toggle{
-				&:after{
-					content: "+";
-					display: inline-block;
-					margin-left: 0.4em;
-					vertical-align: middle;
-				}
-				&.active:after{content:"-"}
-			}
 		}
 	}
 	
 	nav.extra{
 		width: calc(100% - 0.5em);
-		height: 100%; min-height: 44px;
+		height: 100%; min-height: 47px;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
-		line-height: 1.2em;
-		//left: -190px;
-		& * {min-height: $font1 + 1px;}
+		//line-height: 1.2em;
+		position: relative;
+		//left: -247px;
+		//& * {min-height: $font1 + 1px;}
 		.timestamps{
+			//margin-bottom: 2px;
 			ul{
 				display: flex;
 				justify-content: space-between;
 				color: white;
+				.city{margin-bottom: 2px;}
 			}
 		}
 	}
@@ -66,10 +61,19 @@ header{
 		}
 	}
 	&:hover{
-		height: 80px;
+		height: 104px;
 		nav{
 			transform: translateY(0);
 			opacity: 1;
 		}
+	}
+
+	#search{
+		position: fixed;
+		background-color: $grey;
+		min-width: 100vw;
+		top: 0; left: 0;
+		padding: $padding2 $padding2 0;
+		@include anime(.2s);
 	}
 }

@@ -47,11 +47,12 @@ var scrollController = (function () {
             //console.log(window.location)
             var path = window.location.origin
             if(window.location.href.indexOf("random") > -1)path = window.location.href;
+            if(window.location.href.indexOf("images") > -1)path = window.location.href;
 
             var page = $("#page").val();
                 page++;
             $("#page").val(page);
-
+console.log(path)
             var u = path+'/page/'+page;
 
             $.ajax({

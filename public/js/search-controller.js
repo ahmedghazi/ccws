@@ -3,10 +3,24 @@ var navController = (function () {
     bind_events()
     
     function bind_events() {
-        /*$(document).on( 'click', 'h1 a', function(e) {
+        $("html").on("click", "a.no-smoothState", function(e){
             e.preventDefault();
-            get_page(document.title, '/');
-        });*/
+            $("#search").removeClass("slideTop");
+            setTimeout(function(){
+                $("input[name='s']").focus();
+            }, 400);
+        });
+
+        $("html").on("mouseenter", "a.no-smoothState", function(e){
+            $("#search").removeClass("slideTop");
+            setTimeout(function(){
+                $("input[name='s']").focus();
+            }, 400);
+        });
+
+        $("html").on("mouseleave", "header", function(e){
+            $("#search").addClass("slideTop");
+        });
 
         $(document).on( 'mousedown', '#s', function(e) {
             if(this.value == "SEARCH")this.value = "";
@@ -32,33 +46,6 @@ var navController = (function () {
             }
         });
 
-        /*$(document).on( 'click', '#random', function(e) {
-            get_page("RANDOM", "/random")
-            
-        });*/
-
-        /*$(document).on( 'click', '#contributors-toggle', function(e) {
-            $(this).toggleClass("active");
-            $(".from").toggle()
-        });*/
-
-    }
-
-    function get_page(title, url){
-        $("body").addClass("loading");
-        
-        $.ajax({
-          method: "GET",
-          url: url
-        })
-        .done(function( data ) { 
-            console.log($("section", data).html())
-            $('section').html($("section", data).html());
-            //$(".liste").html(data)
-            history.pushState({}, title, url)
-            $('#s').val("SEARCH")
-            $("body").removeClass("loading");
-        });
     }
 
 })();

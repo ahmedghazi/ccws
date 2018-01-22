@@ -1,0 +1,15 @@
+each post in posts
+    if post.link && post.name && post.image && post.color
+        -var color = "000";
+        if post.color && post.color != "FFFFFF"
+            -color = post.color;
+        -var sizes = ["small","medium","large"];
+        -var size = sizes[Math.round(Math.random()*2)]
+        
+        .item-image(id="#{post._id}" class="#{size}")
+            a(href="#{post.link}" target="_blank")
+                
+                figure(style="background-color:##{post.color}")
+                    if post.color
+                        //div.placeholder(style="background-color:##{post.color}")
+                        img(src="#{root_url}/#{post.image}" width="" height="" onerror="this.className='img404'")

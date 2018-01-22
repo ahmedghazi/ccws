@@ -5,8 +5,8 @@ var smoothState = (function () {
     function init() {
         var options = {
             //anchors: "header a",
-            //blacklist: '.sub-menu a, .projet-more',
-            prefetch: true,
+            blacklist: ".no-smoothState",
+            //prefetch: true,
             cacheLength: 2,
             onStart: {
                 duration: 250, // Duration of our animation
@@ -40,13 +40,13 @@ var smoothState = (function () {
 console.log(options)
         smoothState = $('#page').smoothState(options).data('smoothState');
         //console.log(smoothState)
-        
+        /*
         $(document).on('mousemove', "#page.is-exiting", function(e){
             $('#loader').css({
                left:  e.pageX - 125,
                top:   e.pageY - 125
             });
-        });
+        });*/
     }
 
 })();

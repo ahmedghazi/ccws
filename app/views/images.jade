@@ -1,0 +1,16 @@
+extends layout
+
+block content
+    header
+        include header
+        
+    section
+        .liste-images.liste
+            include liste-images
+
+
+        .pagination.text-center
+            input(type='hidden' value='1' id='page')
+            a(href='#' class='btn more') Moar
+
+    

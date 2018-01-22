@@ -9,6 +9,7 @@ html(lang='en')
     block js
       if ENV_DEVELOPMENT
         script(src='http://localhost:35729/livereload.js')
+      script(src='/js/modernizr.min.js')
   body.loading
 
     #page
@@ -23,6 +24,8 @@ html(lang='en')
     script(src='/js/smooth-state.js')
     script(src='/js/search-controller.js')
     script(src='/js/scroll-controller.js')
+    script(src='/js/mobile-controller.js')
+
     script(src='/js/app.js')
     if title == "pull"
       script(src='/js/pull.js')
