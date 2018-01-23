@@ -1,10 +1,10 @@
 (function( $ ) {
 	'use strict';
-	var x, y,bsDiv;
+	var x, y, bsDiv;
 	init();
 
 	function init(){
-		//loader_mouse();
+
 		setTimeout(function(){
 			$("body").removeClass("loading");
 		}, 1000);
@@ -14,7 +14,7 @@
 		bsDiv = document.getElementById("loader");
 
 		pubsub.on("navChanged", function(){
-			place_loader()
+			place_loader();
 		});
 		
         /*

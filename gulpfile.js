@@ -2,6 +2,13 @@ var gulp = require('gulp'),
   nodemon = require('gulp-nodemon'),
   plumber = require('gulp-plumber'),
   livereload = require('gulp-livereload'),
+  
+  rename        = require('gulp-rename'),
+  //autoprefixer  = require('gulp-autoprefixer'),
+  //minifycss     = require('gulp-minify-css'),
+  concat      = require('gulp-concat'),
+  uglify = require('gulp-uglify'),
+
   sass = require('gulp-ruby-sass');
 
 gulp.task('sass', function () {
@@ -10,8 +17,18 @@ gulp.task('sass', function () {
     .pipe(livereload());
 });
 
+gulp.task('scripts', function() {
+    gulp.src(['./public/js/*.js'])
+      .pipe(concat('functions.js'))
+      .pipe(rename({suffix: '.min'}))
+      //.pipe(stripDebug())//remove logs
+      //.pipe(uglify())
+      .pipe(gulp.dest('./public/js'));
+});
+
 gulp.task('watch', function() {
   gulp.watch('./public/css/*.scss', ['sass']);
+  gulp.watch('./public/js/*.js', ['scripts']);
 });
 
 gulp.task('develop', function () {
@@ -33,6 +50,7 @@ gulp.task('develop', function () {
 
 gulp.task('default', [
   'sass',
+  'scripts',
   'develop',
   'watch'
 ]);
