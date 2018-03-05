@@ -117,6 +117,25 @@ router.get('/all', function (req, res, next) {
         });
 });
 
+router.get('/random/:total', function (req, res, next) {
+    return Post
+          .aggregate([
+            { $sample: { size: parseFloat(req.params.total) } }
+          ])
+          .exec(function(err, posts) {
+            if (err) {
+                console.log(err);
+                return next(err);
+            }
+            return res.json(posts);
+            
+            return res.render('liste', {
+                title: 'CRAZY COOL WEBSITES Archive',
+                posts: posts
+            });
+      });
+});
+
 
 router.get('/media', function(req, res, next) {
     Post
