@@ -120,6 +120,7 @@ router.get('/all', function (req, res, next) {
 router.get('/random/:total', function (req, res, next) {
     return Post
           .aggregate([
+            { $match : { color: {'$exists': true} }},
             { $sample: { size: parseFloat(req.params.total) } }
           ])
           .exec(function(err, posts) {
@@ -127,9 +128,9 @@ router.get('/random/:total', function (req, res, next) {
                 console.log(err);
                 return next(err);
             }
-            return res.json(posts);
+            //return res.json(posts);
             
-            return res.render('liste', {
+            return res.render('api-random-index', {
                 title: 'CRAZY COOL WEBSITES Archive',
                 posts: posts
             });
