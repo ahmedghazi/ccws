@@ -117,7 +117,7 @@ router.get('/all', function (req, res, next) {
         });
 });
 
-router.get('/random/:total', function (req, res, next) {
+router.get('/random/:total/:display', function (req, res, next) {
     return Post
           .aggregate([
             { $match : { color: {'$exists': true} }},
@@ -128,12 +128,14 @@ router.get('/random/:total', function (req, res, next) {
                 console.log(err);
                 return next(err);
             }
-            //return res.json(posts);
-            
-            return res.render('api-random-index', {
-                title: 'CRAZY COOL WEBSITES Archive',
-                posts: posts
-            });
+            if(req.params.display == "json"){
+                return res.json(posts);
+            }else{
+                return res.render('api-random-index', {
+                    title: 'CRAZY COOL WEBSITES Archive',
+                    posts: posts
+                });
+            }
       });
 });
 
