@@ -295,6 +295,12 @@ router.get('/t', function(req, res, next) {
 
 });
 
+router.get('/usr', function(req, res, next) {
+    helpers.collect2(function(response){
+        return res.send(response)
+    })
+})
+
 router.get('/drop', function(req, res, next) {
     req.resetDb();
     res.redirect("/api");

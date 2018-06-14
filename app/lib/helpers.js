@@ -99,6 +99,18 @@ exports.collect = function(min, callback) {
     });
 };
 
+exports.collect2 = function(min, callback) {
+    FB.setAccessToken('398286323958628|IrwxIREQmoqa0x8G2zTIj7AmzP8');
+    FB.api('393558204075688/feed?limit=10&&fields=id,message,name,caption,description,updated_time,link,from,type', function(_res) {
+        if (!_res || _res.error) {
+            console.log(!_res ? 'error occurred' : _res.error);
+        }
+        console.log(_res);
+        callback(_res);
+        //self.record(min, _res);
+    });
+};
+
 exports.record = function(min, _res) {
     var self = this;
     if (!_res || _res.error) {

@@ -36,6 +36,7 @@ router.get('/', function (req, res, next) {
   });
 });
 
+
 router.get('/images', function (req, res, next) {
   return Post
 	  .find()

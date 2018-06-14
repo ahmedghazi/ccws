@@ -69,15 +69,15 @@ module.exports = function(app, config) {
       });
   });
 
-  cron.cronStop(function(err, result){
-    if (err) return console.log(err);
-console.log("cronStop")
-    cron.cronStart(app, function(_err, _result){
-      if (_err) return console.log(_err);
+//   cron.cronStop(function(err, result){
+//     if (err) return console.log(err);
+// console.log("cronStop")
+//     cron.cronStart(app, function(_err, _result){
+//       if (_err) return console.log(_err);
       
-      console.log("cron result: ",_result)
-    });
-  });
+//       console.log("cron result: ",_result)
+//     });
+//   });
   
   return app;
 };
