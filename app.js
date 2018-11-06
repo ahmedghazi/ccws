@@ -2,8 +2,9 @@
 
 var express = require('express'),
   config = require('./config/config'),
-  glob = require('glob'),
-  mongoose = require('mongoose');
+  glob = require('glob');
+const mongoose = require('mongoose');
+  mongoose.Promise = global.Promise;
 
 mongoose.connect(config.db, { useMongoClient: true });
 var db = mongoose.connection;
